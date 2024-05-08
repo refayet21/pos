@@ -51,5 +51,10 @@ class Nav {
       page: () => const CategoryScreen(),
       binding: CategoryControllerBinding(),
     ),
+    GetPage(
+      name: Routes.CUSTOMER,
+      page: () => const CustomerScreen(),
+      binding: CustomerControllerBinding(),
+    ),
   ];
 }
