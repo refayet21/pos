@@ -11,13 +11,11 @@ class AdminDrawer extends StatelessWidget {
     DrawerMenuItem(
         title: 'HOME', routeName: Routes.HOME, icon: Icons.dashboard),
     DrawerMenuItem(title: 'SALES', routeName: Routes.SALES, icon: Icons.sell),
+    DrawerMenuItem(
+        title: 'CATEGORY', routeName: Routes.CATEGORY, icon: Icons.category),
     DrawerMenuItem(title: 'ITEM', routeName: Routes.ITEM, icon: Icons.list),
     DrawerMenuItem(
         title: 'RECEIPTS', routeName: Routes.RECEIPTS, icon: Icons.receipt),
-
-    // DrawerMenuItem(
-    //   title: 'Version No',
-    // ),
   ];
   AdminDrawer({
     super.key,

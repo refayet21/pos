@@ -6,6 +6,7 @@ class Routes {
 
   static const HOME = '/home';
   static const ITEM = '/item';
-  static const SALES = '/sales';
   static const RECEIPTS = '/receipts';
+  static const SALES = '/sales';
+  static const CATEGORY = '/category';
 }
