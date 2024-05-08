@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "257205735066",
+    "project_id": "loyverspos-8d112",
+    "storage_bucket": "loyverspos-8d112.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257205735066:android:957c81856d8b019dbb5923",
+        "android_client_info": {
+          "package_name": "com.example.loyverspos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_LYolLJWYVHg5T-g47aumNM2SFH89L3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
