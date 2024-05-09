@@ -38,7 +38,7 @@ class Nav {
     ),
     GetPage(
       name: Routes.ITEM,
-      page: () => const ItemScreen(),
+      page: () => ItemScreen(),
       binding: ItemControllerBinding(),
     ),
     GetPage(
