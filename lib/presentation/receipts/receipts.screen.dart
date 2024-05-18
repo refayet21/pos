@@ -109,6 +109,81 @@ class ReceiptsScreen extends GetView<ReceiptsController> {
           //     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           //   ),
           // ),
+
+          ElevatedButton(
+            onPressed: () async {
+              // Create a list to hold purchaseInfo data for each item
+              List<String> purchaseInfoList = [];
+
+              // Add vendor and date information
+              // String vendorInfo =
+              //     'Vendor Name: ${selectedVendor?.name ?? "N/A"}';
+              // String dateInfo = 'Date: ${dateController.text}';
+              // purchaseInfoList.add('$vendorInfo\n$dateInfo\n');
+
+              // Add cart items information
+              for (var index = 0;
+                  index < cartController.cartItems.length;
+                  index++) {
+                var item = cartController.cartItems[index];
+
+                String itemInfo = '';
+                itemInfo += 'Product Name: ${item.name ?? "N/A"}\n';
+                itemInfo += 'Barcode: ${item.barcode ?? "N/A"}\n';
+                itemInfo += 'Price: ${item.price?.toString() ?? "N/A"}\n';
+                // itemInfo += 'Stock: ${item.stock?.toString() ?? "N/A"}\n';
+                // itemInfo +=
+                //     'New Stock: ${(item.stock! + item.quantity).toString()}\n';
+                itemInfo += '---\n'; // Separator between items, for clarity
+
+                // Add the purchaseInfo data to the list
+                purchaseInfoList.add(itemInfo);
+              }
+
+              // Show a dialog with the previous purchase information
+              await showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Previous Purchase Information'),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children:
+                            purchaseInfoList.map((info) => Text(info)).toList(),
+                      ),
+                    ),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () async {
+                          // Continue with the purchase confirmation using updated cart items
+                          // await cartController.addPurchaseData(
+                          //   vendorDocId: selectedVendor!.docId,
+                          //   date: dateController.text,
+                          //   cartItems: controller.cartItems
+                          //       .map((item) => item.toJson())
+                          //       .toList(),
+                          // );
+
+                          // Close the dialog
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Confirm'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Close the dialog without saving
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Cancel'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            child: Text('Confirm Purchase'),
+          )
         ],
       ),
     );
