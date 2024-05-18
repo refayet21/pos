@@ -31,7 +31,6 @@ import 'package:loyverspos/model/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loyverspos/model/item_model.dart';
-import 'package:loyverspos/presentation/home/controllers/cartpage.dart';
 import 'package:loyverspos/presentation/home/controllers/home.controller.dart';
 
 class MatchingBarcodesPage extends StatelessWidget {
@@ -99,33 +98,56 @@ class MatchingBarcodesPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Matching Items'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              // Navigate to the cart page when the cart icon is tapped
-              Get.toNamed(Routes.RECEIPTS);
-            },
-          ),
-        ],
+        // actions: [
+        //   IconButton(
+        //     icon: Icon(Icons.shopping_cart),
+        //     onPressed: () {
+        //       // Navigate to the cart page when the cart icon is tapped
+        //       Get.toNamed(Routes.RECEIPTS);
+        //     },
+        //   ),
+        // ],
       ),
       body: ListView.builder(
         itemCount: matchingItems.length,
         itemBuilder: (context, index) {
           final item = matchingItems[index];
+          bool isInCart =
+              cartController.isProductInCart(cartController.allItems[index]);
           return ListTile(
             title: Text(item.name),
             subtitle: Text(
                 'Barcode: ${item.barcode}, Price: \$${item.price.toStringAsFixed(2)}'),
+            // trailing: IconButton(
+            //   icon: Icon(Icons.add_shopping_cart),
+            //   onPressed: () {
+            //     // Add the current item to the cart
+            //     cartController.addToCart(item);
+            //   },
+            // ),
+
             trailing: IconButton(
-              icon: Icon(Icons.add_shopping_cart),
+              icon: isInCart
+                  ? Icon(
+                      Icons.shopping_cart) // If in cart, show a different icon
+                  : Icon(Icons.add_shopping_cart),
               onPressed: () {
-                // Add the current item to the cart
-                cartController.addToCart(item);
+                if (!isInCart) {
+                  cartController.addToCart(cartController.allItems[index]);
+                } else {
+                  // Optionally, you can handle removing from the cart
+                  // controller.removeFromCart(controller.productModel[index]);
+                }
               },
             ),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Get.toNamed(Routes.RECEIPTS);
+        },
+        label: Obx(() => Text('Cart (${cartController.cartItems.length})')),
       ),
     );
   }

@@ -3,12 +3,15 @@ class ItemModel {
   String name;
   String barcode;
   double price;
+  int quantity;
 
-  ItemModel(
-      {this.id,
-      required this.name,
-      required this.barcode,
-      required this.price});
+  ItemModel({
+    this.id,
+    required this.name,
+    required this.barcode,
+    required this.price,
+    this.quantity = 1,
+  });
 
   Map<String, dynamic> toMap() {
     return {
