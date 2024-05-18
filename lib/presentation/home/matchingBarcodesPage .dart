@@ -89,15 +89,19 @@ class MatchingBarcodesPage extends StatelessWidget {
   // }
 
   final List<ItemModel> matchingItems;
+
   final HomeController cartController = Get.put(HomeController());
 
   MatchingBarcodesPage(this.matchingItems);
+
+  var appbarItem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Matching Items'),
+        // title: Text('${appbarItem.name}'),
+        title: Text('Add to cart'),
         // actions: [
         //   IconButton(
         //     icon: Icon(Icons.shopping_cart),
@@ -112,6 +116,7 @@ class MatchingBarcodesPage extends StatelessWidget {
         itemCount: matchingItems.length,
         itemBuilder: (context, index) {
           final item = matchingItems[index];
+          appbarItem = item;
           bool isInCart =
               cartController.isProductInCart(cartController.allItems[index]);
           return ListTile(

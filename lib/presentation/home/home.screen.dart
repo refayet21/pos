@@ -18,7 +18,7 @@ class HomeScreen extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AdminDrawer(),
-      appBar: AppBar(title: Text('Home')),
+      appBar: AppBar(title: Text('SALE')),
       body: Obx(() {
         return ListView.builder(
           itemCount: controller.allItems.length,
