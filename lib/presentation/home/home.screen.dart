@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:loyverspos/model/item_model.dart';
 import 'package:loyverspos/presentation/home/matchingBarcodesPage%20.dart';
 import 'package:loyverspos/widgets/drawer.dart';
 
@@ -64,11 +65,10 @@ class HomeScreen extends GetView<HomeController> {
 
   void _showMatchingBarcodesPage(String barcode) {
     String firstThreeCharacters = barcode.substring(0, 3);
-    List<String> matchingBarcodes = controller.allItems
+    List<ItemModel> matchingItems = controller.allItems
         .where((item) => item.barcode.startsWith(firstThreeCharacters))
-        .map((item) => item.barcode)
         .toList();
 
-    Get.to(() => MatchingBarcodesPage(matchingBarcodes));
+    Get.to(() => MatchingBarcodesPage(matchingItems));
   }
 }
