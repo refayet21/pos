@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_cart/flutter_cart.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -14,10 +15,12 @@ void main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   WidgetsFlutterBinding.ensureInitialized();
-
+  // var cart = FlutterCart();
+  // await cart.initializeCart(isPersistenceSupportEnabled: true);
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(Main(initialRoute));
 }
 

@@ -28,12 +28,12 @@ class Nav {
   static List<GetPage> routes = [
     GetPage(
       name: Routes.HOME,
-      page: () => const HomeScreen(),
+      page: () => HomeScreen(),
       binding: HomeControllerBinding(),
     ),
     GetPage(
       name: Routes.SALES,
-      page: () => const SalesScreen(),
+      page: () => SalesScreen(),
       binding: SalesControllerBinding(),
     ),
     GetPage(
@@ -43,17 +43,17 @@ class Nav {
     ),
     GetPage(
       name: Routes.RECEIPTS,
-      page: () => const ReceiptsScreen(),
+      page: () => ReceiptsScreen(),
       binding: ReceiptsControllerBinding(),
     ),
     GetPage(
       name: Routes.CATEGORY,
-      page: () => const CategoryScreen(),
+      page: () => CategoryScreen(),
       binding: CategoryControllerBinding(),
     ),
     GetPage(
       name: Routes.CUSTOMER,
-      page: () => const CustomerScreen(),
+      page: () => CustomerScreen(),
       binding: CustomerControllerBinding(),
     ),
   ];

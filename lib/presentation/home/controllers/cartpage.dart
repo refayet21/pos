@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:loyverspos/presentation/home/controllers/home.controller.dart';
-import 'package:loyverspos/widgets/drawer.dart';
 
-import 'controllers/receipts.controller.dart';
-
-class ReceiptsScreen extends GetView<ReceiptsController> {
-  ReceiptsScreen({Key? key}) : super(key: key);
-  final HomeController cartController = Get.put(HomeController());
+class CartPage extends StatelessWidget {
+  final HomeController cartController = Get.find();
 
   @override
   Widget build(BuildContext context) {

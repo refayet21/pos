@@ -7,28 +7,6 @@ import 'package:loyverspos/widgets/drawer.dart';
 
 import 'controllers/home.controller.dart';
 
-// class HomeScreen extends GetView<HomeController> {
-//   const HomeScreen({Key? key}) : super(key: key);
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       drawer: AdminDrawer(),
-//       appBar: AppBar(title: Text('Home')),
-//       body: Obx(() {
-//         return ListView.builder(
-//           itemCount: controller.allItems.length,
-//           itemBuilder: (context, index) {
-//             final item = controller.allItems[index];
-//             return ListTile(
-//               title: Text(item.barcode),
-//             );
-//           },
-//         );
-//       }),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loyverspos/widgets/drawer.dart';
