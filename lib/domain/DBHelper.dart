@@ -40,7 +40,7 @@ class DatabaseHelper {
 
   Future<List<ItemModel>> getItems() async {
     Database db = await database;
-    var items = await db.query('items', orderBy: 'id');
+    var items = await db.query('items', orderBy: 'barcode');
     List<ItemModel> itemList =
         items.isNotEmpty ? items.map((c) => ItemModel.fromMap(c)).toList() : [];
     return itemList;
