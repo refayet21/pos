@@ -17,279 +17,80 @@ class ItemScreen extends GetView<ItemController> {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AdminDrawer(),
-      appBar: AppBar(
-        title: const Text('ItemScreen'),
-        centerTitle: true,
-      ),
-      body: Obx(
-        () => Container(
-          margin: EdgeInsets.all(16),
-          child: Column(
-            children: <Widget>[
-              TextField(
-                controller: nameController,
-                decoration: InputDecoration(hintText: 'Enter name'),
+      appBar: AppBar(title: Text('Items')),
+      body: Obx(() {
+        return ListView.builder(
+          itemCount: controller.allItems.length,
+          itemBuilder: (context, index) {
+            final item = controller.allItems[index];
+            return ListTile(
+              title: Text(item.name),
+              subtitle: Text('Barcode: ${item.barcode} | Price: ${item.price}'),
+              trailing: IconButton(
+                icon: Icon(Icons.delete),
+                onPressed: () => controller.deleteItem(item.id!),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     // ElevatedButton(
-
-              //     //     child: Text("Add")),
-              //     SizedBox(
-              //       width: 16,
-              //     ),
-              //     // ElevatedButton(
-              //     //     onPressed: () {
-              //     //       if (nameController.text != "") {
-              //     //         controller.updateStudent(ItemModel(
-              //     //             id: studentId, name: nameController.text));
-              //     //         nameController.text = "";
-              //     //       }
-              //     //     },
-              //     //     child: Text("Update"))
-              //   ],
-              // ),
-              Expanded(
-                  child: ListView.builder(
-                      itemCount: controller.allStudent.length,
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(controller.allStudent[index].name!),
-                          // onTap: () {
-                          //   studentId = controller.allStudent[index].id!;
-                          //   nameController.text =
-                          //       controller.allStudent[index].name!;
-                          // },
-                          // child: Card(
-                          //   child: Row(
-                          //     children: <Widget>[
-                          //       Expanded(
-                          //         child: Container(
-                          //           padding: EdgeInsets.all(16),
-                          //           child: Text(
-                          //               controller.allStudent[index].name!),
-                          //         ),
-                          //       ),
-                          //       InkWell(
-                          //           onTap: () {
-                          //             controller.deleteStudent(
-                          //                 controller.allStudent[index].id!);
-                          //           },
-                          //           child: Icon(
-                          //             Icons.close,
-                          //             color: Colors.red,
-                          //             size: 32,
-                          //           ))
-                          //     ],
-                          //   ),
-                          // ),
-                          trailing: IconButton(
-                            icon: Icon(
-                              Icons.delete_forever,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              displayDeleteDialog(
-                                  controller.allStudent[index].id!);
-                            },
-                          ),
-
-                          onTap: () {
-                            studentId = controller.allStudent[index].id!;
-                            nameController.text =
-                                controller.allStudent[index].name!;
-                          },
-                        );
-                      }))
-            ],
-          ),
-        ),
-      ),
+              onTap: () => _showItemDialog(context, item),
+            );
+          },
+        );
+      }),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          if (nameController.text != "") {
-            controller
-                .addStudent(ItemModel(id: null, name: nameController.text));
-            nameController.text = "";
-          }
-        },
+        onPressed: () => _showItemDialog(context),
         child: Icon(Icons.add),
       ),
     );
   }
 
-  displayDeleteDialog(int id) {
+  void _showItemDialog(BuildContext context, [ItemModel? item]) {
+    final isNewItem = item == null;
+    final nameController = TextEditingController(text: item?.name ?? '');
+    final barcodeController = TextEditingController(text: item?.barcode ?? '');
+    final priceController =
+        TextEditingController(text: item?.price.toString() ?? '');
+
     Get.defaultDialog(
-      title: "Delete Item",
-      titleStyle: TextStyle(fontSize: 20.sp),
-      middleText: 'Are you sure to delete Product ?',
-      textCancel: "Cancel",
-      textConfirm: "Confirm",
-      confirmTextColor: Colors.black,
-      onCancel: () {},
+      title: isNewItem ? 'Add Item' : 'Update Item',
+      content: Column(
+        children: [
+          TextField(
+            controller: nameController,
+            decoration: InputDecoration(labelText: 'Name'),
+          ),
+          TextField(
+            controller: barcodeController,
+            decoration: InputDecoration(labelText: 'Barcode'),
+          ),
+          TextField(
+            controller: priceController,
+            decoration: InputDecoration(labelText: 'Price'),
+            keyboardType: TextInputType.number,
+          ),
+        ],
+      ),
+      textConfirm: isNewItem ? 'Save' : 'Update',
       onConfirm: () {
-        controller.deleteStudent(id);
+        final name = nameController.text;
+        final barcode = barcodeController.text;
+        final price = double.tryParse(priceController.text) ?? 0.0;
+
+        if (name.isNotEmpty && barcode.isNotEmpty && price > 0) {
+          final newItem = ItemModel(
+            id: item?.id,
+            name: name,
+            barcode: barcode,
+            price: price,
+          );
+
+          if (isNewItem) {
+            controller.addItem(newItem);
+          } else {
+            controller.updateItem(newItem);
+          }
+
+          Get.back();
+        }
       },
     );
   }
 }
-
-  // _buildAddEditItemView({String? text, int? addEditFlag, String? docId}) {
-  //   Get.bottomSheet(
-  //     Container(
-  //       decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.only(
-  //             topRight: Radius.circular(16.r),
-  //             topLeft: Radius.circular(16.r),
-  //           ),
-  //           color: Colors.blue.shade200),
-  //       child: Padding(
-  //         padding:
-  //             EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h, bottom: 16.h),
-  //         child: Form(
-  //           key: controller.formKey,
-  //           autovalidateMode: AutovalidateMode.onUserInteraction,
-  //           child: SingleChildScrollView(
-  //             child: Column(
-  //               crossAxisAlignment: CrossAxisAlignment.start,
-  //               children: [
-  //                 Text(
-  //                   '${text} Item',
-  //                   style: TextStyle(
-  //                       fontSize: 16.sp,
-  //                       fontWeight: FontWeight.bold,
-  //                       color: Colors.black),
-  //                 ),
-  //                 SizedBox(
-  //                   height: 8.h,
-  //                 ),
-  //                 TextFormField(
-  //                   keyboardType: TextInputType.text,
-  //                   decoration: InputDecoration(
-  //                     hintText: 'Name',
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8.r),
-  //                     ),
-  //                   ),
-  //                   controller: controller.nameController,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 10.h,
-  //                 ),
-  //                 TextFormField(
-  //                   keyboardType: TextInputType.text,
-  //                   decoration: InputDecoration(
-  //                     hintText: 'category',
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8.r),
-  //                     ),
-  //                   ),
-  //                   controller: controller.categoryController,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 10.h,
-  //                 ),
-  //                 TextFormField(
-  //                   // keyboardType: TextInputType.number,
-  //                   decoration: InputDecoration(
-  //                     hintText: 'soldBy',
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8.r),
-  //                     ),
-  //                   ),
-  //                   controller: controller.soldByController,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 10.h,
-  //                 ),
-  //                 TextFormField(
-  //                   keyboardType: TextInputType.number,
-  //                   decoration: InputDecoration(
-  //                     hintText: 'price',
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8.r),
-  //                     ),
-  //                   ),
-  //                   controller: controller.priceController,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 10.h,
-  //                 ),
-  //                 TextFormField(
-  //                   keyboardType: TextInputType.number,
-  //                   decoration: InputDecoration(
-  //                     hintText: 'cost',
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8.r),
-  //                     ),
-  //                   ),
-  //                   controller: controller.costController,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 8.h,
-  //                 ),
-  //                 TextFormField(
-  //                   // keyboardType: TextInputType.number,
-  //                   decoration: InputDecoration(
-  //                     hintText: 'barcode',
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8.r),
-  //                     ),
-  //                   ),
-  //                   controller: controller.barcodeController,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 8.h,
-  //                 ),
-  //                 TextFormField(
-  //                   keyboardType: TextInputType.number,
-  //                   decoration: InputDecoration(
-  //                     hintText: 'stock',
-  //                     border: OutlineInputBorder(
-  //                       borderRadius: BorderRadius.circular(8.r),
-  //                     ),
-  //                   ),
-  //                   controller: controller.stockController,
-  //                 ),
-  //                 SizedBox(
-  //                   height: 8.h,
-  //                 ),
-  //                 ConstrainedBox(
-  //                   constraints: BoxConstraints.tightFor(
-  //                       width: Get.context!.width, height: 45.h),
-  //                   child: ElevatedButton(
-  //                     child: Text(
-  //                       text!,
-  //                       style: TextStyle(color: Colors.black, fontSize: 16.sp),
-  //                     ),
-  //                     onPressed: () {
-  //                       final itemModel = ItemModel(
-  //                         docId: docId,
-  //                         name: controller.nameController.text,
-  //                         category: controller.categoryController.text,
-  //                         soldBy: controller.soldByController.text,
-  //                         price: int.tryParse(controller.priceController.text),
-  //                         cost: int.tryParse(controller.costController.text),
-  //                         barcode: controller.barcodeController.text,
-  //                         stock: int.tryParse(controller.stockController.text),
-  //                       );
-
-  //                       controller.saveUpdateItem(
-  //                           itemModel, docId!, addEditFlag!);
-  //                     },
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
-
- 
-
-  
-// }

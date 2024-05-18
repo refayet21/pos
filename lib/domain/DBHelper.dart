@@ -1,27 +1,64 @@
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
+import 'package:loyverspos/model/item_model.dart';
 import 'package:sqflite/sqflite.dart';
-import 'dart:io' as io;
+import 'package:path/path.dart';
 
-class DBHelper {
-  static Database? _db;
+class DatabaseHelper {
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+  static Database? _database;
 
-  Future<Database> get db async {
-    if (_db != null) {
-      return _db!;
-    }
-    _db = await initDatabase();
-    return _db!;
+  factory DatabaseHelper() {
+    return _instance;
   }
 
-  initDatabase() async {
-    io.Directory documentDirectory = await getApplicationDocumentsDirectory();
-    String path = join(documentDirectory.path, 'item.db');
-    var db = openDatabase(path, version: 1, onCreate: _onCreate);
-    return db;
+  DatabaseHelper._internal();
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
   }
 
-  _onCreate(Database db, int version) {
-    db.execute("CREATE TABLE item(id INTEGER PRIMARY KEY, name TEXT)");
+  Future<Database> _initDatabase() async {
+    String path = join(await getDatabasesPath(), 'items.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
+  }
+
+  Future _onCreate(Database db, int version) async {
+    await db.execute('''
+    CREATE TABLE items (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      barcode TEXT NOT NULL,
+      price REAL NOT NULL
+    )
+    ''');
+  }
+
+  Future<List<ItemModel>> getItems() async {
+    Database db = await database;
+    var items = await db.query('items', orderBy: 'id');
+    List<ItemModel> itemList =
+        items.isNotEmpty ? items.map((c) => ItemModel.fromMap(c)).toList() : [];
+    return itemList;
+  }
+
+  Future<int> addItem(ItemModel item) async {
+    Database db = await database;
+    return await db.insert('items', item.toMap());
+  }
+
+  Future<int> updateItem(ItemModel item) async {
+    Database db = await database;
+    return await db
+        .update('items', item.toMap(), where: 'id = ?', whereArgs: [item.id]);
+  }
+
+  Future<int> deleteItem(int id) async {
+    Database db = await database;
+    return await db.delete('items', where: 'id = ?', whereArgs: [id]);
   }
 }
