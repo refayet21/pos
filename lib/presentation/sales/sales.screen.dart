@@ -200,7 +200,7 @@ class SalesScreen extends GetView<SalesController> {
                 },
               );
             },
-            child: Text('Confirm Purchase'),
+            child: Text('Preview'),
           ),
         ],
       ),

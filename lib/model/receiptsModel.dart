@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ReceiptsModel {
   final String receiptNo;
   final String date;
@@ -21,12 +23,21 @@ class ReceiptsModel {
   }
 
   // Create a DeliveryOrder object from a Map
-  factory ReceiptsModel.fromMap(Map<String, dynamic> map) {
+  // factory ReceiptsModel.fromMap(DocumentSnapshot data) {
+  //   return ReceiptsModel(
+  //     receiptNo: data['receiptNo'],
+  //     date: data['date'],
+  //     data: List<String>.from(data['data']),
+  //     totalPrice: data['totalPrice'],
+  //   );
+  // }
+
+  factory ReceiptsModel.fromMap(QueryDocumentSnapshot data) {
     return ReceiptsModel(
-      receiptNo: map['receiptNo'],
-      date: map['date'],
-      data: List<String>.from(map['data']),
-      totalPrice: map['totalPrice'],
+      receiptNo: data['receiptNo'] as String,
+      date: data['date'] as String,
+      data: List<String>.from(data['data'] as List<dynamic>),
+      totalPrice: data['totalPrice'],
     );
   }
 }
