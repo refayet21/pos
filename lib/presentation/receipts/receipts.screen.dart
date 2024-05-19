@@ -240,7 +240,7 @@ class ReceiptsScreen extends GetView<ReceiptsController> {
                       TextEditingController(text: item.quantity.toString());
 
                   return ListTile(
-                    title: Text(item.name),
+                    title: Text('${item.name} ${item.barcode}'),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
