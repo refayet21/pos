@@ -1,7 +1,7 @@
 class ReceiptsModel {
   final String receiptNo;
   final String date;
-  final List<List<dynamic>> data;
+  final List<String> data;
   final dynamic totalPrice;
 
   ReceiptsModel({
@@ -25,7 +25,7 @@ class ReceiptsModel {
     return ReceiptsModel(
       receiptNo: map['receiptNo'],
       date: map['date'],
-      data: List<List<dynamic>>.from(map['data']),
+      data: List<String>.from(map['data']),
       totalPrice: map['totalPrice'],
     );
   }

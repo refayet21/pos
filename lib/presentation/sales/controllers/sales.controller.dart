@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:loyverspos/model/receiptsModel.dart';
 
 class SalesController extends GetxController {
-  Future<bool> saveReceipts(ReceiptsModel? receipts) async {
-    if (receipts == null) return false;
+  Future<bool> saveReceipts(ReceiptsModel receipts) async {
+    // if (receipts == null) return false;
 
     try {
       await FirebaseFirestore.instance

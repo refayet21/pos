@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:loyverspos/model/receiptsModel.dart';
 import 'package:loyverspos/presentation/home/controllers/home.controller.dart';
 import 'package:loyverspos/widgets/drawer.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'controllers/sales.controller.dart';
 
@@ -137,7 +140,51 @@ class SalesScreen extends GetView<SalesController> {
                     ),
                     actions: <Widget>[
                       TextButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          final box = GetStorage();
+                          String currentDates =
+                              DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+                          // Retrieve the stored date and docounter value from local storage
+                          String? storedDate = box.read('storedDate');
+                          int docounter = box.read('docounter') ?? 0;
+
+                          // Check if the stored date matches the current date
+                          if (storedDate != currentDates) {
+                            // Reset the counter to 1
+                            docounter = 0;
+                            // Update the stored date to the current date
+                            await box.write('storedDate', currentDates);
+                          } else {
+                            // Increment the counter if the stored date matches the current date
+                            docounter++;
+                          }
+
+                          // Save the updated docounter value to local storage
+                          await box.write('docounter', docounter);
+
+                          docounter++;
+
+                          final String currentDate =
+                              DateTime.now().day.toString().padLeft(2, '0');
+                          final String currentMonth =
+                              DateTime.now().month.toString().padLeft(2, '0');
+                          final String currentYear =
+                              DateTime.now().year.toString();
+
+                          final String InvNo =
+                              'Inv-$currentDate-$currentMonth-$currentYear-$docounter';
+
+                          controller.saveReceipts(ReceiptsModel(
+                            receiptNo: InvNo,
+                            // date: (DateFormat("dd/MM/yyyy")
+                            //     .format(DateTime.now() as DateTime)
+                            //     .toString()),
+                            date: '$currentDate-$currentMonth-$currentYear',
+                            data: purchaseInfoList,
+                            totalPrice:
+                                cartController.totalPrice.toStringAsFixed(2),
+                          ));
                           Navigator.of(context).pop();
                         },
                         child: Text('Confirm'),
