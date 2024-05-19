@@ -1,23 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:loyverspos/model/receiptsModel.dart';
 
 class SalesController extends GetxController {
-  //TODO: Implement SalesController
+  Future<bool> saveReceipts(ReceiptsModel? receipts) async {
+    if (receipts == null) return false;
 
-  final count = 0.obs;
-  @override
-  void onInit() {
-    super.onInit();
+    try {
+      await FirebaseFirestore.instance
+          .collection("receipts")
+          .add(receipts.toMap()); // Use add instead of set
+      return true;
+    } catch (e) {
+      print('Error saving delivery order: ${e.toString()}');
+      return false;
+    }
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }
