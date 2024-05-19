@@ -122,11 +122,18 @@ class SalesScreen extends GetView<SalesController> {
                     title: Text('Preview Info'),
                     content: SingleChildScrollView(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children:
-                            purchaseInfoList.map((info) => Text(info)).toList(),
-                      ),
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ...purchaseInfoList
+                                .map((info) => Text(info))
+                                .toList(),
+                            Text(
+                              'Total Price: \₹ ${cartController.totalPrice.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                  fontSize: 15.sp, fontWeight: FontWeight.bold),
+                            ),
+                          ]),
                     ),
                     actions: <Widget>[
                       TextButton(
