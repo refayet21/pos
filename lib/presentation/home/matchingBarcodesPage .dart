@@ -150,7 +150,7 @@ class MatchingBarcodesPage extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          Get.toNamed(Routes.RECEIPTS);
+          Get.toNamed(Routes.SALES);
         },
         label: Obx(() => Text('Cart (${cartController.cartItems.length})')),
       ),
