@@ -1,21 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:loyverspos/model/receiptsModel.dart';
-import 'package:loyverspos/presentation/home/controllers/home.controller.dart';
 import 'package:loyverspos/widgets/drawer.dart';
-
 import 'controllers/receipts.controller.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
-import 'package:loyverspos/widgets/drawer.dart';
 
 class ReceiptsScreen extends GetView<ReceiptsController> {
   ReceiptsScreen({Key? key}) : super(key: key) {
-    // Initialize the controller outside of the build method
     Get.put(ReceiptsController());
   }
 
@@ -30,41 +21,61 @@ class ReceiptsScreen extends GetView<ReceiptsController> {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          SizedBox(height: 10.h),
-          Expanded(
-            child: Obx(
-              () {
-                // Listen to changes in findreceipts
-                return ListView.builder(
-                  itemCount: controller.findreceipts.length,
-                  itemBuilder: (context, index) => Card(
-                    color: Colors.grey.shade200,
-                    child: ListTile(
-                      subtitle: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 3.h),
-                          Text(
-                            'Receipt No : ${controller.findreceipts[index].receiptNo}',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(height: 3.h),
-                        ],
+      body: Obx(
+        () {
+          return ListView.builder(
+            itemCount: controller.receipts.length,
+            itemBuilder: (context, index) {
+              List<dynamic> data = controller.receipts[index]['data'];
+
+              List<List<dynamic>> convertedList = [];
+              for (var item in data) {
+                List<dynamic> items = item['items'];
+                convertedList.add(items);
+              }
+
+              return Padding(
+                padding: EdgeInsets.all(8.0.r),
+                child: Card(
+                  child: ListTile(
+                    title: Text(
+                      'Receipt No: ${controller.receipts[index]['receiptNo']}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
                       ),
                     ),
+                    // subtitle: Column(
+                    //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //   children: [
+                    //     if (receipt.data is List)
+                    //       for (var item in receipt.data) Text('Item: ${item}'),
+                    //     if (receipt.data is Map) Text('Data: ${receipt.data}'),
+                    //   ],
+                    // ),
+                    // You can add more fields from the ReceiptsModel here
+                    // onTap: () {
+                    //   douserProductcartController.generateInvoicePdf(
+                    //     controller.dousers[index]['doNo'],
+                    //     controller.dousers[index]['date'],
+                    //     controller.dousers[index]['userId'],
+                    //     controller.dousers[index]['marketingPerson'],
+                    //     controller.dousers[index]['vendorName'],
+                    //     controller.dousers[index]['vendorAddress'],
+                    //     controller.dousers[index]['contactPerson'],
+                    //     controller.dousers[index]['vendorMobile'],
+                    //     convertedList,
+                    //     controller.dousers[index]['totalInWord'],
+                    //     controller.dousers[index]['deliveryDate'],
+                    //   );
+                    // },
                   ),
-                );
-              },
-            ),
-          ),
-        ],
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

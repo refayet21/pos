@@ -105,16 +105,28 @@ class SalesScreen extends GetView<SalesController> {
               )),
           ElevatedButton(
             onPressed: () async {
-              List<String> purchaseInfoList = [];
+              //  List<List<dynamic>> purchaseInfoList = [];
+
+              //   for (var item in cartController.cartItems) {
+              //     String itemInfo =
+              //         '''
+              //       Product: ${item.name}-${item.barcode}
+              //       Price: \$${item.price}
+              //       Quantity: ${item.quantity}
+              //       Total: \$${(item.price * item.quantity).toStringAsFixed(2)}
+              //     ''';
+              //     purchaseInfoList.add(itemInfo);
+              //   }
+
+              List<List<dynamic>> purchaseInfoList = [];
 
               for (var item in cartController.cartItems) {
-                String itemInfo =
-                    '''
-                  Product: ${item.name}-${item.barcode}
-                  Price: \$${item.price}
-                  Quantity: ${item.quantity}
-                  Total: \$${(item.price * item.quantity).toStringAsFixed(2)}
-                ''';
+                List<dynamic> itemInfo = [
+                  'Product: ${item.name}-${item.barcode}',
+                  'Price: \$${item.price}',
+                  'Quantity: ${item.quantity}',
+                  'Total: \$${(item.price * item.quantity).toStringAsFixed(2)}',
+                ];
                 purchaseInfoList.add(itemInfo);
               }
 
@@ -128,9 +140,15 @@ class SalesScreen extends GetView<SalesController> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ...purchaseInfoList
-                                .map((info) => Text(info))
-                                .toList(),
+                            // ...purchaseInfoList
+                            //     .map((info) => Text(info))
+                            //     .toList(),
+                            ...purchaseInfoList.map((info) {
+                              // Join the strings in the info list with a newline character
+                              String itemInfo = info.join('\n');
+                              // Return a Text widget with the joined string
+                              return Text(itemInfo);
+                            }).toList(),
                             Text(
                               'Total Price: \₹ ${cartController.totalPrice.toStringAsFixed(2)}',
                               style: TextStyle(

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+// import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:loyverspos/model/receiptsModel.dart';
 import 'package:loyverspos/widgets/customFullScreenDialog.dart';
@@ -48,15 +48,15 @@ class SalesController extends GetxController {
       print('Error saving delivery order: ${e.toString()}');
 
       // Show error toast
-      Fluttertoast.showToast(
-        msg: "Error saving receipt",
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 3,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.sp,
-      );
+      // Fluttertoast.showToast(
+      //   msg: "Error saving receipt",
+      //   toastLength: Toast.LENGTH_SHORT,
+      //   gravity: ToastGravity.BOTTOM,
+      //   timeInSecForIosWeb: 3,
+      //   backgroundColor: Colors.red,
+      //   textColor: Colors.white,
+      //   fontSize: 16.sp,
+      // );
 
       return false;
     }

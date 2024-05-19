@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ReceiptsModel {
   final String receiptNo;
   final String date;
-  final List<String> data;
+  final List<List<dynamic>> data;
   final dynamic totalPrice;
 
   ReceiptsModel({
@@ -34,9 +34,10 @@ class ReceiptsModel {
 
   factory ReceiptsModel.fromMap(QueryDocumentSnapshot data) {
     return ReceiptsModel(
-      receiptNo: data['receiptNo'] as String,
-      date: data['date'] as String,
-      data: List<String>.from(data['data'] as List<dynamic>),
+      receiptNo: data['receiptNo']?.toString() ?? '',
+      date: data['date']?.toString() ?? '',
+      // data: List<String>.from(data['data'] as List<dynamic>),
+      data: List<List<dynamic>>.from(data['data']),
       totalPrice: data['totalPrice'],
     );
   }
