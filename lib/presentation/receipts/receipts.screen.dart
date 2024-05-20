@@ -46,30 +46,34 @@ class ReceiptsScreen extends GetView<ReceiptsController> {
                         color: Colors.black,
                       ),
                     ),
-                    // subtitle: Column(
-                    //   crossAxisAlignment: CrossAxisAlignment.start,
-                    //   children: [
-                    //     if (receipt.data is List)
-                    //       for (var item in receipt.data) Text('Item: ${item}'),
-                    //     if (receipt.data is Map) Text('Data: ${receipt.data}'),
-                    //   ],
-                    // ),
-                    // You can add more fields from the ReceiptsModel here
-                    // onTap: () {
-                    //   douserProductcartController.generateInvoicePdf(
-                    //     controller.dousers[index]['doNo'],
-                    //     controller.dousers[index]['date'],
-                    //     controller.dousers[index]['userId'],
-                    //     controller.dousers[index]['marketingPerson'],
-                    //     controller.dousers[index]['vendorName'],
-                    //     controller.dousers[index]['vendorAddress'],
-                    //     controller.dousers[index]['contactPerson'],
-                    //     controller.dousers[index]['vendorMobile'],
-                    //     convertedList,
-                    //     controller.dousers[index]['totalInWord'],
-                    //     controller.dousers[index]['deliveryDate'],
-                    //   );
-                    // },
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Date: ${controller.receipts[index]['date']}',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'Total Price: ${controller.receipts[index]['totalPrice']}',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(
+                        Icons.print,
+                        color: Colors.blue,
+                      ),
+                      onPressed: () {},
+                    ),
                   ),
                 ),
               );

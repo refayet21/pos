@@ -195,9 +195,6 @@ class SalesScreen extends GetView<SalesController> {
 
                           controller.saveReceipts(ReceiptsModel(
                             receiptNo: InvNo,
-                            // date: (DateFormat("dd/MM/yyyy")
-                            //     .format(DateTime.now() as DateTime)
-                            //     .toString()),
                             date: '$currentDate-$currentMonth-$currentYear',
                             data: purchaseInfoList,
                             totalPrice:
