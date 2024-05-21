@@ -43,67 +43,63 @@ class ReceiptsController extends GetxController {
       ];
 
       doc.addPage(
-        pw.MultiPage(
+        pw.Page(
           margin:
               pw.EdgeInsets.only(top: 3, right: 10.w, bottom: 6, left: 10.w),
-          pageFormat: PdfPageFormat.a4,
+          pageFormat: PdfPageFormat.roll80,
           build: (context) {
-            return [
-              pw.Container(
-                child: pw.Row(
-                  children: [
-                    pw.Expanded(
-                      // flex: 2,
-                      child: pw.Column(
-                        // crossAxisAlignment: pw.CrossAxisAlignment.start,
-                        children: [
-                          // pw.Image(
-                          //   pw.MemoryImage(header),
-                          //   // height: 72,
-                          //   // width: 72,
-                          // ),
-                          pw.Text(
-                            'Invoice',
-                            style: pw.TextStyle(
-                              fontSize: 20.sp,
-                              fontWeight: pw.FontWeight.bold,
-                              decoration: pw.TextDecoration.underline,
+            return pw.Column(
+              children: [
+                pw.Container(
+                  child: pw.Row(
+                    children: [
+                      pw.Expanded(
+                        child: pw.Column(
+                          children: [
+                            pw.Text(
+                              'Invoice',
+                              style: pw.TextStyle(
+                                fontSize: 20.sp,
+                                fontWeight: pw.FontWeight.bold,
+                                decoration: pw.TextDecoration.underline,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              pw.Column(
+                pw.Column(
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
-                    pw.Text("receiptNo : $receiptNo"),
+                    pw.Text("Receipt No: $receiptNo"),
                     pw.SizedBox(height: 1.h),
-                    pw.Text("date : ${date}"),
-                  ]),
-              pw.SizedBox(height: 10),
-              pw.Table.fromTextArray(
-                headers: tableHeaders,
-                data: data,
-                cellStyle: pw.TextStyle(
-                  fontSize: 7.sp,
+                    pw.Text("Date: $date"),
+                  ],
                 ),
-                border: pw.TableBorder.all(),
-                headerStyle: pw.TextStyle(
-                  fontSize: 7.sp,
+                pw.SizedBox(height: 10),
+                pw.Table.fromTextArray(
+                  headers: tableHeaders,
+                  data: data,
+                  cellStyle: pw.TextStyle(
+                    fontSize: 7.sp,
+                  ),
+                  border: pw.TableBorder.all(),
+                  headerStyle: pw.TextStyle(
+                    fontSize: 7.sp,
+                  ),
                 ),
-              ),
-              pw.SizedBox(height: 10.h),
-              pw.SizedBox(height: 10),
-              pw.Text(
-                'totalPrice: $totalPrice',
-                style: pw.TextStyle(
-                  fontSize: 11.0,
+                pw.SizedBox(height: 10.h),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  'Total Price: $totalPrice',
+                  style: pw.TextStyle(
+                    fontSize: 11.0,
+                  ),
                 ),
-              ),
-            ];
+              ],
+            );
           },
         ),
       );
@@ -111,11 +107,9 @@ class ReceiptsController extends GetxController {
       Get.to(() => InvoicepreviewScreen(
             doc: doc,
             pdfname: receiptNo,
-
-            // stockdata: stockdata,
           ));
     } catch (e) {
-      // print('Error: $e');
+      // Handle the error, e.g., print('Error: $e');
     }
   }
 }

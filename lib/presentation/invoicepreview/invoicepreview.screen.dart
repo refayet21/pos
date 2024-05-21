@@ -47,7 +47,7 @@ class InvoicepreviewScreen extends GetView<InvoicepreviewController> {
                 child: PdfPreview(
                   build: (format) => doc!.save(),
                   allowSharing: true,
-                  allowPrinting: false,
+                  allowPrinting: true,
                   dynamicLayout: false,
                   useActions: true,
                   canChangeOrientation: false,
@@ -55,7 +55,7 @@ class InvoicepreviewScreen extends GetView<InvoicepreviewController> {
                   canDebug: true,
                   shouldRepaint: true,
                   enableScrollToPage: true,
-                  initialPageFormat: PdfPageFormat.a4,
+                  initialPageFormat: PdfPageFormat.roll80,
                   pdfFileName: "$pdfname.pdf",
                 ),
               ),
