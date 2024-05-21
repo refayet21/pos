@@ -119,6 +119,7 @@ class SalesScreen extends GetView<SalesController> {
               //   }
 
               List<List<dynamic>> purchaseInfoList = [];
+              List<List<dynamic>> purchaseInfofinalList = [];
 
               for (var item in cartController.cartItems) {
                 List<dynamic> itemInfo = [
@@ -128,6 +129,16 @@ class SalesScreen extends GetView<SalesController> {
                   'Total: \$${(item.price * item.quantity).toStringAsFixed(2)}',
                 ];
                 purchaseInfoList.add(itemInfo);
+              }
+
+              for (var item in cartController.cartItems) {
+                List<dynamic> itemInfo = [
+                  '${item.name}-${item.barcode}',
+                  '${item.price}',
+                  '${item.quantity}',
+                  '${(item.price * item.quantity).toStringAsFixed(2)}',
+                ];
+                purchaseInfofinalList.add(itemInfo);
               }
 
               await showDialog(
@@ -196,7 +207,7 @@ class SalesScreen extends GetView<SalesController> {
                           controller.saveReceipts(ReceiptsModel(
                             receiptNo: InvNo,
                             date: '$currentDate-$currentMonth-$currentYear',
-                            data: purchaseInfoList,
+                            data: purchaseInfofinalList,
                             totalPrice:
                                 cartController.totalPrice.toStringAsFixed(2),
                           ));
