@@ -185,7 +185,7 @@ class HomeScreen extends GetView<HomeController> {
 
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, // Number of items per row
+            crossAxisCount: 5, // Number of items per row
             childAspectRatio: 2 / 1, // Aspect ratio of the items
             crossAxisSpacing: 10, // Horizontal spacing between items
             mainAxisSpacing: 10, // Vertical spacing between items
@@ -199,24 +199,24 @@ class HomeScreen extends GetView<HomeController> {
                 elevation: 5,
                 shadowColor: Colors.grey,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.r),
-                ),
+                    // borderRadius: BorderRadius.circular(15.r),
+                    ),
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Colors.blue.shade200, Colors.blue.shade900],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(15.r),
-                  ),
+                      // gradient: LinearGradient(
+                      //   colors: [Colors.blue.shade200, Colors.blue.shade900],
+                      //   begin: Alignment.topLeft,
+                      //   end: Alignment.bottomRight,
+                      // ),
+                      // borderRadius: BorderRadius.circular(15.r),
+                      ),
                   alignment: Alignment.center,
                   child: Text(
                     '$alphabet',
                     style: TextStyle(
-                      fontSize: 24.sp,
+                      fontSize: 14.sp,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      // color: Colors.white,
                       shadows: [
                         Shadow(
                           offset: Offset(2, 2),

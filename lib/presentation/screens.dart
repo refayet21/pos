@@ -5,3 +5,4 @@ export 'package:loyverspos/presentation/invoicepreview/invoicepreview.screen.dar
 export 'package:loyverspos/presentation/item/item.screen.dart';
 export 'package:loyverspos/presentation/receipts/receipts.screen.dart';
 export 'package:loyverspos/presentation/sales/sales.screen.dart';
+export 'package:loyverspos/presentation/splash/splash.screen.dart';

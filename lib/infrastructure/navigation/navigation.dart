@@ -61,5 +61,10 @@ class Nav {
       page: () => InvoicepreviewScreen(),
       binding: InvoicepreviewControllerBinding(),
     ),
+    GetPage(
+      name: Routes.SPLASH,
+      page: () => const SplashScreen(),
+      binding: SplashControllerBinding(),
+    ),
   ];
 }
