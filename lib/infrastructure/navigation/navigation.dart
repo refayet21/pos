@@ -56,5 +56,10 @@ class Nav {
       page: () => CustomerScreen(),
       binding: CustomerControllerBinding(),
     ),
+    GetPage(
+      name: Routes.INVOICEPREVIEW,
+      page: () => InvoicepreviewScreen(),
+      binding: InvoicepreviewControllerBinding(),
+    ),
   ];
 }

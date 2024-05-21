@@ -5,9 +5,10 @@ class Routes {
   }
 
   static const CATEGORY = '/category';
+  static const CUSTOMER = '/customer';
   static const HOME = '/home';
   static const ITEM = '/item';
   static const RECEIPTS = '/receipts';
   static const SALES = '/sales';
-  static const CUSTOMER = '/customer';
+  static const INVOICEPREVIEW = '/invoicepreview';
 }
