@@ -1,23 +1,29 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:loyverspos/infrastructure/navigation/routes.dart';
 
 class SplashController extends GetxController {
-  //TODO: Implement SplashController
+  final box = GetStorage();
+  static const int splashDurationSeconds = 3;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    startDelayedFuture();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<void> startDelayedFuture() async {
+    await Future.delayed(Duration(seconds: splashDurationSeconds));
+    await checkLoggedIn();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
+  Future<void> checkLoggedIn() async {
+    var adminemail = box.read('adminemail');
 
-  void increment() => count.value++;
+    if (adminemail != null && adminemail.isNotEmpty) {
+      Get.offNamed(Routes.HOME);
+    } else {
+      Get.offNamed(Routes.LOGIN);
+    }
+  }
 }

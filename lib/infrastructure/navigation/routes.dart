@@ -9,7 +9,9 @@ class Routes {
   static const HOME = '/home';
   static const INVOICEPREVIEW = '/invoicepreview';
   static const ITEM = '/item';
+  static const LOGIN = '/login';
   static const RECEIPTS = '/receipts';
   static const SALES = '/sales';
   static const SPLASH = '/splash';
+  static const ADDUSER = '/adduser';
 }
