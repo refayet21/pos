@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:loyverspos/infrastructure/navigation/routes.dart';
 import 'package:loyverspos/model/item_model.dart';
 import 'package:loyverspos/presentation/home/matchingBarcodesPage%20.dart';
 import 'package:loyverspos/widgets/drawer.dart';
@@ -162,13 +164,26 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({Key? key}) : super(key: key);
+  final box = GetStorage();
+  HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: AdminDrawer(),
-      appBar: AppBar(title: Text('SALE')),
+      appBar: AppBar(
+        title: Text('SALE'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {
+                box.remove('adminemail');
+                box.remove('douseremail');
+                Get.offNamed(Routes.LOGIN);
+              },
+              icon: Icon(Icons.logout))
+        ],
+      ),
       body: Obx(() {
         final uniqueAlphabets = _getUniqueAlphabets(controller.allItems);
 
