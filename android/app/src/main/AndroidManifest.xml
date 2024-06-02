@@ -10,7 +10,7 @@
 
 
     <application
-        android:label="loyverspos"
+        android:label="BILL"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

@@ -36,20 +36,8 @@ class SplashScreen extends GetView<SplashController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Welcome',
+                'Welcome To BILL',
                 style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w600),
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10.h,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Welcome',
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
               ),
             ],
           ),
