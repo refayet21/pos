@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:loyverspos/model/receiptsModel.dart';
 import 'package:loyverspos/presentation/invoicepreview/invoicepreview.screen.dart';
 import 'package:pdf/pdf.dart';
@@ -13,12 +15,29 @@ class ReceiptsController extends GetxController {
   RxList<ReceiptsModel> findreceipts = RxList<ReceiptsModel>([]);
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   late CollectionReference collectionReference;
+  final box = GetStorage();
+  var employeeName = ''.obs;
 
   @override
   void onInit() {
     super.onInit();
-
+    _getUserInfoAndRecord();
     getUserDo();
+  }
+
+  Future<void> _getUserInfoAndRecord() async {
+    try {
+      String email = box.read('useremail');
+      QuerySnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .where('email', isEqualTo: email)
+          .get();
+      DocumentSnapshot userDoc = userSnapshot.docs.first;
+      // employeeId.value = userDoc.id;
+      employeeName.value = userDoc['name'];
+
+      // box.write('employeeId', userDoc.id);
+    } catch (e) {}
   }
 
   Stream<List<ReceiptsModel>> getAllReceipts() =>
@@ -74,6 +93,8 @@ class ReceiptsController extends GetxController {
                   crossAxisAlignment: pw.CrossAxisAlignment.start,
                   children: [
                     pw.Text("Receipt No: $receiptNo"),
+                    pw.SizedBox(height: 1.h),
+                    pw.Text("Sales Person: $employeeName"),
                     pw.SizedBox(height: 1.h),
                     pw.Text("Date: $date"),
                   ],
