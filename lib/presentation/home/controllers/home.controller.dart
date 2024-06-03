@@ -116,7 +116,7 @@ class HomeController extends GetxController {
       var items = await databaseHelper.getItems();
       allItems.value = items;
     } catch (e) {
-      print('Error fetching items: $e');
+      print('Error fetching items: $e'); // Consider using a logging package
     }
   }
 
@@ -127,11 +127,13 @@ class HomeController extends GetxController {
     return cartItems.any((item) => item.id == product.id);
   }
 
-  void addToCart(ItemModel product) {
+  void addToCart(ItemModel product, {int quantity = 1}) {
     if (!isProductInCart(product)) {
+      product.quantity = quantity;
       cartItems.add(product);
     } else {
-      print('Product is already in the cart');
+      print(
+          'Product is already in the cart'); // Consider using a logging package
     }
   }
 
@@ -170,5 +172,9 @@ class HomeController extends GetxController {
   void updatePrice() {
     cartItems
         .refresh(); // This will trigger UI updates for all observers of cartItems
+  }
+
+  void clearCart() {
+    cartItems.clear();
   }
 }
