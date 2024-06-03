@@ -411,7 +411,7 @@ class AdduserScreen extends GetView<AdduserController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${text} Do User',
+                    '${text}User',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -562,9 +562,9 @@ class AdduserScreen extends GetView<AdduserController> {
 
   void displayDeleteDialog(String docId) {
     Get.defaultDialog(
-      title: "Delete Do User",
+      title: "Delete User",
       titleStyle: TextStyle(fontSize: 20.sp),
-      middleText: 'Are you sure to delete Do User ?',
+      middleText: 'Are you sure to delete User ?',
       textCancel: "Cancel",
       textConfirm: "Confirm",
       confirmTextColor: Colors.black,

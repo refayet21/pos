@@ -272,17 +272,17 @@ class AdduserController extends GetxController {
 
     try {
       // First, delete the document itself
-      await firebaseFirestore.collection("do_users").doc(docId).delete();
+      await firebaseFirestore.collection("users").doc(docId).delete();
 
       // Then, delete all subcollections
-      await _deleteSubcollections("do_users/$docId");
+      await _deleteSubcollections("users/$docId");
 
       CustomFullScreenDialog.cancelDialog();
       Get.back(); // Assuming you're using GetX for navigation
       CustomSnackBar.showSnackBar(
         context: Get.context,
-        title: "Do User Deleted",
-        message: "Do User deleted successfully",
+        title: "User Deleted",
+        message: "User deleted successfully",
         backgroundColor: Colors.green,
       );
     } catch (error) {
