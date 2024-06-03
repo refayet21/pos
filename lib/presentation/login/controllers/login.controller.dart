@@ -18,7 +18,7 @@ class LoginController extends GetxController {
     try {
       isLoading.value = true;
       bool isAdmin = await checkUserCredentials('admin', email, password);
-      bool isDoUser = await checkUserCredentials('do_users', email, password);
+      bool isDoUser = await checkUserCredentials('users', email, password);
 
       if (isAdmin) {
         // Admin user authenticated via Firebase Authentication

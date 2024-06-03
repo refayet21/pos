@@ -19,18 +19,89 @@ class ItemScreen extends GetView<ItemController> {
       drawer: AdminDrawer(),
       appBar: AppBar(title: Text('Items')),
       body: Obx(() {
+        // return ListView.builder(
+        //   itemCount: controller.allItems.length,
+        //   itemBuilder: (context, index) {
+        //     final item = controller.allItems[index];
+        //     return ListTile(
+        //       title: Text(item.name),
+        //       subtitle: Text('Barcode: ${item.barcode} | Price: ${item.price}'),
+        //       trailing: IconButton(
+        //         icon: Icon(
+        //           Icons.delete,
+        //           color: Colors.red, // Set the color to red
+        //         ),
+        //         onPressed: () => controller.deleteItem(item.id!),
+        //       ),
+        //       onTap: () => _showItemDialog(context, item),
+        //     );
+        //   },
+        // );
+
         return ListView.builder(
           itemCount: controller.allItems.length,
           itemBuilder: (context, index) {
             final item = controller.allItems[index];
-            return ListTile(
-              title: Text(item.name),
-              subtitle: Text('Barcode: ${item.barcode} | Price: ${item.price}'),
-              trailing: IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () => controller.deleteItem(item.id!),
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
-              onTap: () => _showItemDialog(context, item),
+              child: ListTile(
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                title: Text(
+                  item.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                subtitle: Text(
+                  'Barcode: ${item.barcode} | Price: ${item.price}',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey[600],
+                  ),
+                ),
+                // trailing: IconButton(
+                //   icon: Icon(
+                //     Icons.delete,
+                //     color: Colors.red,
+                //   ),
+                //   onPressed: () => controller.deleteItem(item.id!),
+                // ),
+                // onTap: () => _showItemDialog(context, item),
+
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.edit_note,
+                        color: Colors.blue,
+                      ),
+                      onPressed: () => _showItemDialog(context, item),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      onPressed: () => controller.deleteItem(item.id!),
+                    ),
+                  ],
+                ),
+              ),
             );
           },
         );

@@ -16,10 +16,10 @@ class AdminDrawer extends StatelessWidget {
     DrawerMenuItem(
         title: 'RECEIPTS', routeName: Routes.RECEIPTS, icon: Icons.receipt),
 
-    DrawerMenuItem(
-        title: 'ADD USER',
-        routeName: Routes.ADDUSER,
-        icon: Icons.person_add_alt),
+    // DrawerMenuItem(
+    //     title: 'ADD USER',
+    //     routeName: Routes.ADDUSER,
+    //     icon: Icons.person_add_alt),
   ];
   AdminDrawer({
     super.key,
