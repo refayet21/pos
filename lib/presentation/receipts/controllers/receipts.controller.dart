@@ -23,6 +23,7 @@ class ReceiptsController extends GetxController {
     super.onInit();
     _getUserInfoAndRecord();
     getUserDo();
+    print('employeeName is ${employeeName.value}');
   }
 
   Future<void> _getUserInfoAndRecord() async {
@@ -94,7 +95,9 @@ class ReceiptsController extends GetxController {
                   children: [
                     pw.Text("Receipt No: $receiptNo"),
                     pw.SizedBox(height: 1.h),
-                    pw.Text("Sales Person: $employeeName"),
+                    box.read('adminemail') != null
+                        ? pw.Text("Sales Person: Admin")
+                        : pw.Text("Sales Person: $employeeName"),
                     pw.SizedBox(height: 1.h),
                     pw.Text("Date: $date"),
                   ],
