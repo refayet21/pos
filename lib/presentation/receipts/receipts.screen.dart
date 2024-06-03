@@ -133,11 +133,14 @@ import 'package:blue_thermal_printer/blue_thermal_printer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:loyverspos/model/receiptsModel.dart';
 import 'package:loyverspos/widgets/drawer.dart';
+import 'package:loyverspos/widgets/user_drawer.dart';
 import 'controllers/receipts.controller.dart';
 
 class ReceiptsScreen extends GetView<ReceiptsController> {
+  final box = GetStorage();
   ReceiptsScreen({Key? key}) : super(key: key) {
     Get.put(ReceiptsController());
   }
@@ -146,7 +149,7 @@ class ReceiptsScreen extends GetView<ReceiptsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AdminDrawer(),
+      drawer: box.read('adminemail') != null ? AdminDrawer() : UserDrawer(),
       appBar: AppBar(
         title: Text(
           'All Receipts',

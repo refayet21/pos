@@ -12,25 +12,26 @@ class LoginController extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  var isLoading = false.obs; // Observable to track loading state
+  var isLoading = false.obs;
 
   Future<User?> login(String email, String password) async {
     try {
       isLoading.value = true;
+
       bool isAdmin = await checkUserCredentials('admin', email, password);
-      bool isDoUser = await checkUserCredentials('users', email, password);
+      bool isUser = await checkUserCredentials('users', email, password);
 
       if (isAdmin) {
-        // Admin user authenticated via Firebase Authentication
         box.write('adminemail', email);
         Get.offNamed(Routes.HOME);
-        return null; // No need to return User object for admin
-      } else if (isDoUser) {
-        box.write('douseremail', email);
-        Get.offNamed(Routes.HOME);
-
         return null;
+      } else if (isUser) {
+        box.write('useremail', email);
+        Get.offNamed(Routes.HOME);
+        // Get.offNamed(Routes.DOUSER_INVOICE);
+        return null; // No need to return User object for DoUser
       } else {
+        // User not found in any collection
         Get.snackbar(
           'Error',
           'User does not exist.',
@@ -52,6 +53,33 @@ class LoginController extends GetxController {
     return null;
   }
 
+  // Future<bool> checkAdminAuthentication(String email, String password) async {
+  //   try {
+  //     final credential = await _auth.signInWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //     return credential.user != null;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+
+  // Future<bool> checkUserCredentials(
+  //     String collection, String email, String password) async {
+
+  //   try {
+  //     final querySnapshot = await _firestore
+  //         .collection(collection)
+  //         .where('email', isEqualTo: email)
+  //         .where('password', isEqualTo: password)
+  //         .get();
+  //     return querySnapshot.docs.isNotEmpty;
+  //   } catch (e) {
+  //     return false;
+  //   }
+  // }
+
   Future<bool> checkUserCredentials(
       String collection, String email, String password) async {
     try {
@@ -71,8 +99,20 @@ class LoginController extends GetxController {
       // Return true only if both conditions are met
       return credential.user != null && querySnapshot.docs.isNotEmpty;
     } catch (e) {
+      // Handle any unexpected errors
+      // print('Error: $e');
       return false;
     }
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
   }
 
   @override

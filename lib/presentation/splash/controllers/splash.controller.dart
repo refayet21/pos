@@ -19,8 +19,11 @@ class SplashController extends GetxController {
 
   Future<void> checkLoggedIn() async {
     var adminemail = box.read('adminemail');
+    var useremail = box.read('useremail');
 
     if (adminemail != null && adminemail.isNotEmpty) {
+      Get.offNamed(Routes.HOME);
+    } else if (useremail != null && useremail.isNotEmpty) {
       Get.offNamed(Routes.HOME);
     } else {
       Get.offNamed(Routes.LOGIN);

@@ -7,6 +7,7 @@ import 'package:loyverspos/infrastructure/navigation/routes.dart';
 import 'package:loyverspos/model/item_model.dart';
 import 'package:loyverspos/presentation/home/matchingBarcodesPage%20.dart';
 import 'package:loyverspos/widgets/drawer.dart';
+import 'package:loyverspos/widgets/user_drawer.dart';
 
 import 'controllers/home.controller.dart';
 
@@ -170,7 +171,7 @@ class HomeScreen extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: AdminDrawer(),
+      drawer: box.read('adminemail') != null ? AdminDrawer() : UserDrawer(),
       appBar: AppBar(
         title: Text('SALE'),
         centerTitle: true,
@@ -178,7 +179,7 @@ class HomeScreen extends GetView<HomeController> {
           IconButton(
               onPressed: () {
                 box.remove('adminemail');
-                box.remove('douseremail');
+                box.remove('useremail');
                 Get.offNamed(Routes.LOGIN);
               },
               icon: Icon(Icons.logout))

@@ -6,7 +6,7 @@ import 'package:loyverspos/infrastructure/navigation/routes.dart';
 import 'package:loyverspos/model/drawer_menu.dart';
 import 'package:loyverspos/widgets/reuseable_drawer.dart';
 
-class AdminDrawer extends StatelessWidget {
+class UserDrawer extends StatelessWidget {
   final List<DrawerMenuItem> drawerItems = [
     DrawerMenuItem(title: 'SALE', routeName: Routes.HOME, icon: Icons.sell),
     // DrawerMenuItem(title: 'SALES', routeName: Routes.SALES, icon: Icons.sell),
@@ -15,13 +15,10 @@ class AdminDrawer extends StatelessWidget {
     DrawerMenuItem(title: 'ITEM', routeName: Routes.ITEM, icon: Icons.list_alt),
     DrawerMenuItem(
         title: 'RECEIPTS', routeName: Routes.RECEIPTS, icon: Icons.receipt),
-
     DrawerMenuItem(
-        title: 'ADD USER',
-        routeName: Routes.ADDUSER,
-        icon: Icons.person_add_alt),
+        title: 'USER', routeName: Routes.CUSTOMER, icon: Icons.people),
   ];
-  AdminDrawer({
+  UserDrawer({
     super.key,
   });
 
