@@ -16,7 +16,7 @@ class AdduserScreen extends GetView<AdduserController> {
       drawer: AdminDrawer(),
       appBar: AppBar(
         title: Text(
-          'ADD DO USER',
+          'ADD USER',
           style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.w700),
         ),
         centerTitle: true,
@@ -26,7 +26,7 @@ class AdduserScreen extends GetView<AdduserController> {
           Padding(
             padding: EdgeInsets.all(8.0.r),
             child: TextField(
-              onChanged: (value) => controller.searchdouser(value),
+              onChanged: (value) => controller.searchuser(value),
               decoration: InputDecoration(
                 hintText: "Search",
                 prefixIcon: Icon(Icons.search),
@@ -42,12 +42,12 @@ class AdduserScreen extends GetView<AdduserController> {
           // Expanded(
           //   child: Obx(
           //     () => ListView.builder(
-          //       itemCount: controller.founddouser.length,
+          //       itemCount: controller.founduser.length,
           //       itemBuilder: (context, index) => Card(
           //         color: Colors.grey.shade200,
           //         child: ListTile(
           //           title: Text(
-          //             'Name : ${controller.founddouser[index].name!}',
+          //             'Name : ${controller.founduser[index].name!}',
           //             style: TextStyle(
           //                 fontSize: 16.sp,
           //                 fontWeight: FontWeight.w600,
@@ -61,7 +61,7 @@ class AdduserScreen extends GetView<AdduserController> {
           //                 height: 3.h,
           //               ),
           //               Text(
-          //                 'Address :${controller.founddouser[index].address!}',
+          //                 'Address :${controller.founduser[index].address!}',
           //                 style: TextStyle(
           //                     fontSize: 14.sp,
           //                     fontWeight: FontWeight.w600,
@@ -71,7 +71,7 @@ class AdduserScreen extends GetView<AdduserController> {
           //                 height: 3.h,
           //               ),
           //               Text(
-          //                 'Mobile : ${controller.founddouser[index].mobile!}',
+          //                 'Mobile : ${controller.founduser[index].mobile!}',
           //                 style: TextStyle(
           //                     fontSize: 14.sp,
           //                     fontWeight: FontWeight.w600,
@@ -81,7 +81,7 @@ class AdduserScreen extends GetView<AdduserController> {
           //                 height: 3.h,
           //               ),
           //               Text(
-          //                 'Email : ${controller.founddouser[index].email!}',
+          //                 'Email : ${controller.founduser[index].email!}',
           //                 style: TextStyle(
           //                     fontSize: 14.sp,
           //                     fontWeight: FontWeight.w600,
@@ -91,7 +91,7 @@ class AdduserScreen extends GetView<AdduserController> {
           //                 height: 3.h,
           //               ),
           //               Text(
-          //                 'Password : ${controller.founddouser[index].password!}',
+          //                 'Password : ${controller.founduser[index].password!}',
           //                 style: TextStyle(
           //                     fontSize: 14.sp,
           //                     fontWeight: FontWeight.w600,
@@ -101,7 +101,7 @@ class AdduserScreen extends GetView<AdduserController> {
           //           ),
           //           leading: CircleAvatar(
           //             child: Text(
-          //               controller.founddouser[index].name!
+          //               controller.founduser[index].name!
           //                   .substring(0, 1)
           //                   .capitalize!,
           //               style: TextStyle(
@@ -116,25 +116,25 @@ class AdduserScreen extends GetView<AdduserController> {
           //             ),
           //             onPressed: () {
           //               displayDeleteDialog(
-          //                   controller.founddouser[index].docId!);
+          //                   controller.founduser[index].docId!);
           //             },
           //           ),
           //           onTap: () {
           //             controller.nameController.text =
-          //                 controller.founddouser[index].name!;
+          //                 controller.founduser[index].name!;
           //             controller.addressController.text =
-          //                 controller.founddouser[index].address!;
+          //                 controller.founduser[index].address!;
           //             controller.mobileController.text =
-          //                 controller.founddouser[index].mobile!;
+          //                 controller.founduser[index].mobile!;
           //             controller.emailController.text =
-          //                 controller.founddouser[index].email!;
+          //                 controller.founduser[index].email!;
           //             controller.passwordController.text =
-          //                 controller.founddouser[index].password!;
+          //                 controller.founduser[index].password!;
 
-          //             _buildAddEditdoUserView(
+          //             _buildAddEdituserView(
           //                 text: 'UPDATE',
           //                 addEditFlag: 2,
-          //                 docId: controller.founddouser[index].docId!);
+          //                 docId: controller.founduser[index].docId!);
           //           },
           //         ),
           //       ),
@@ -145,17 +145,16 @@ class AdduserScreen extends GetView<AdduserController> {
           Expanded(
             child: Obx(
               () {
-                // Sort founddouser list by name
-                controller.founddouser
-                    .sort((a, b) => a.name!.compareTo(b.name!));
+                // Sort founduser list by name
+                controller.founduser.sort((a, b) => a.name!.compareTo(b.name!));
 
                 return ListView.builder(
-                  itemCount: controller.founddouser.length,
+                  itemCount: controller.founduser.length,
                   itemBuilder: (context, index) => Card(
                     color: Colors.grey.shade200,
                     child: ListTile(
                       title: Text(
-                        'Name : ${controller.founddouser[index].name!}',
+                        'Name : ${controller.founduser[index].name!}',
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
@@ -168,7 +167,7 @@ class AdduserScreen extends GetView<AdduserController> {
                         children: [
                           SizedBox(height: 3.h),
                           Text(
-                            'Address :${controller.founddouser[index].address!}',
+                            'Address :${controller.founduser[index].address!}',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
@@ -177,7 +176,7 @@ class AdduserScreen extends GetView<AdduserController> {
                           ),
                           SizedBox(height: 3.h),
                           Text(
-                            'Mobile : ${controller.founddouser[index].mobile!}',
+                            'Mobile : ${controller.founduser[index].mobile!}',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
@@ -186,7 +185,7 @@ class AdduserScreen extends GetView<AdduserController> {
                           ),
                           SizedBox(height: 3.h),
                           Text(
-                            'Email : ${controller.founddouser[index].email!}',
+                            'Email : ${controller.founduser[index].email!}',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
@@ -195,7 +194,7 @@ class AdduserScreen extends GetView<AdduserController> {
                           ),
                           SizedBox(height: 3.h),
                           Text(
-                            'Password : ${controller.founddouser[index].password!}',
+                            'Password : ${controller.founduser[index].password!}',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
@@ -206,7 +205,7 @@ class AdduserScreen extends GetView<AdduserController> {
                       ),
                       leading: CircleAvatar(
                         child: Text(
-                          controller.founddouser[index].name!
+                          controller.founduser[index].name!
                               .substring(0, 1)
                               .capitalize!,
                           style: TextStyle(
@@ -223,29 +222,29 @@ class AdduserScreen extends GetView<AdduserController> {
                         ),
                         onPressed: () {
                           displayDeleteDialog(
-                            controller.founddouser[index].docId!,
+                            controller.founduser[index].docId!,
                           );
 
                           // print(
-                          //     ' view docid ${controller.founddouser[index].docId!}');
+                          //     ' view docid ${controller.founduser[index].docId!}');
                         },
                       ),
                       onTap: () {
                         controller.nameController.text =
-                            controller.founddouser[index].name!;
+                            controller.founduser[index].name!;
                         controller.addressController.text =
-                            controller.founddouser[index].address!;
+                            controller.founduser[index].address!;
                         controller.mobileController.text =
-                            controller.founddouser[index].mobile!;
+                            controller.founduser[index].mobile!;
                         controller.emailController.text =
-                            controller.founddouser[index].email!;
+                            controller.founduser[index].email!;
                         controller.passwordController.text =
-                            controller.founddouser[index].password!;
+                            controller.founduser[index].password!;
 
-                        _buildAddEditdoUserView(
+                        _buildAddEdituserView(
                           text: 'UPDATE',
                           addEditFlag: 2,
-                          docId: controller.founddouser[index].docId!,
+                          docId: controller.founduser[index].docId!,
                         );
                       },
                     ),
@@ -258,13 +257,13 @@ class AdduserScreen extends GetView<AdduserController> {
       ),
       floatingActionButton: ElevatedButton(
           onPressed: () {
-            _buildAddEditdoUserView(text: 'ADD', addEditFlag: 1, docId: '');
+            _buildAddEdituserView(text: 'ADD', addEditFlag: 1, docId: '');
           },
-          child: Text('Add Do User')),
+          child: Text('ADD USER')),
     );
   }
 
-  // _buildAddEditdoUserView({String? text, int? addEditFlag, String? docId}) {
+  // _buildAddEdituserView({String? text, int? addEditFlag, String? docId}) {
   //   Get.bottomSheet(
   //     Container(
   //       decoration: BoxDecoration(
@@ -371,7 +370,7 @@ class AdduserScreen extends GetView<AdduserController> {
   //                       style: TextStyle(color: Colors.black, fontSize: 16.sp),
   //                     ),
   //                     onPressed: () {
-  //                       controller.saveUpdatedoUsers(
+  //                       controller.saveUpdateusers(
   //                         controller.nameController.text,
   //                         controller.addressController.text,
   //                         controller.mobileController.text,
@@ -392,7 +391,7 @@ class AdduserScreen extends GetView<AdduserController> {
   //   );
   // }
 
-  _buildAddEditdoUserView({String? text, int? addEditFlag, String? docId}) {
+  _buildAddEdituserView({String? text, int? addEditFlag, String? docId}) {
     Get.bottomSheet(
       Container(
         decoration: BoxDecoration(
@@ -523,7 +522,7 @@ class AdduserScreen extends GetView<AdduserController> {
                       ),
                       onPressed: () {
                         if (controller.formKey.currentState!.validate()) {
-                          controller.saveUpdatedoUsers(
+                          controller.saveUpdateusers(
                             controller.nameController.text,
                             controller.addressController.text,
                             controller.mobileController.text,

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class DoUserModel {
+class UserModel {
   String? docId;
   String? name;
   String? address;
@@ -8,7 +8,7 @@ class DoUserModel {
   String? email;
   String? password;
 
-  DoUserModel({
+  UserModel({
     this.docId,
     this.name,
     this.address,
@@ -17,7 +17,7 @@ class DoUserModel {
     this.password,
   });
 
-  DoUserModel.fromJson(DocumentSnapshot data) {
+  UserModel.fromJson(DocumentSnapshot data) {
     docId = data.id;
     name = data["name"] as String?;
     address = data["address"] as String?;

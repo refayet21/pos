@@ -17,18 +17,17 @@ class AdduserController extends GetxController {
       mobileController,
       emailController,
       passwordController;
-  RxList<DoUserModel> founddouser = RxList<DoUserModel>([]);
+  RxList<UserModel> founduser = RxList<UserModel>([]);
 
   // Firestore operation
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   late CollectionReference collectionReference;
 
-  // RxList<DoUserModel> dousers = RxList<DoUserModel>([]);
-  RxList<DoUserModel> dousers = RxList<DoUserModel>([]);
-  Stream<List<DoUserModel>> getAlldoUsers() =>
-      collectionReference.snapshots().map((query) =>
-          query.docs.map((item) => DoUserModel.fromJson(item)).toList());
+  // RxList<userModel> users = RxList<userModel>([]);
+  RxList<UserModel> users = RxList<UserModel>([]);
+  Stream<List<UserModel>> getAllusers() => collectionReference.snapshots().map(
+      (query) => query.docs.map((item) => UserModel.fromJson(item)).toList());
 
   @override
   void onInit() {
@@ -38,19 +37,19 @@ class AdduserController extends GetxController {
     mobileController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
-    collectionReference = firebaseFirestore.collection("do_users");
-    // dousers.bindStream(getAlldoUsers());
-    // founddouser = dousers;
-    getAlldoUsers().listen((douser) {
-      dousers.assignAll(douser);
-      founddouser.assignAll(douser);
+    collectionReference = firebaseFirestore.collection("users");
+    // users.bindStream(getAllusers());
+    // founduser = users;
+    getAllusers().listen((user) {
+      users.assignAll(user);
+      founduser.assignAll(users);
 
       // Print foundProduct after it's assigned
       // print(foundProduct);
     });
   }
 
-  void saveUpdatedoUsers(
+  void saveUpdateusers(
     String? name,
     String? address,
     String? mobile,
@@ -77,8 +76,8 @@ class AdduserController extends GetxController {
         Get.back();
         CustomSnackBar.showSnackBar(
           context: Get.context,
-          title: "Do User Added",
-          message: "Do User added successfully",
+          title: "User Added",
+          message: "User added successfully",
           backgroundColor: Colors.green,
         );
       } else if (addEditFlag == 2) {
@@ -103,8 +102,8 @@ class AdduserController extends GetxController {
         Get.back();
         CustomSnackBar.showSnackBar(
           context: Get.context,
-          title: "Do User Updated",
-          message: "Do User updated successfully",
+          title: "User Updated",
+          message: "User updated successfully",
           backgroundColor: Colors.green,
         );
       }
@@ -120,7 +119,7 @@ class AdduserController extends GetxController {
     }
   }
 
-  // void saveUpdatedoUsers(
+  // void saveUpdateusers(
   //   String? name,
   //   String? address,
   //   String? mobile,
@@ -236,9 +235,9 @@ class AdduserController extends GetxController {
     passwordController.clear();
   }
 
-  // Stream<List<DoUserModel>> getAlldoUsers() =>
+  // Stream<List<userModel>> getAllusers() =>
   //     collectionReference.snapshots().map((query) =>
-  //         query.docs.map((item) => DoUserModel.fromJson(item)).toList());
+  //         query.docs.map((item) => userModel.fromJson(item)).toList());
 
   // void deleteData(String docId) {
   //   CustomFullScreenDialog.showDialog();
@@ -348,30 +347,30 @@ class AdduserController extends GetxController {
     }
   }
 
-  // void searchdouser(String searchQuery) {
+  // void searchuser(String searchQuery) {
   //   if (searchQuery.isEmpty) {
-  //     founddouser.assignAll(dousers.toList());
+  //     founduser.assignAll(users.toList());
   //   } else {
-  //     List<DoUserModel> results = dousers
+  //     List<userModel> results = users
   //         .where((element) =>
   //             element.name!.toLowerCase().contains(searchQuery.toLowerCase()))
   //         .toList();
-  //     founddouser.assignAll(results);
+  //     founduser.assignAll(results);
   //   }
   // }
 
-  void searchdouser(String searchQuery) {
-    List<DoUserModel> results;
+  void searchuser(String searchQuery) {
+    List<UserModel> results;
     if (searchQuery.isEmpty) {
-      results = dousers;
+      results = users;
     } else {
-      results = dousers
+      results = users
           .where((element) => element.name
               .toString()
               .toLowerCase()
               .contains(searchQuery.toLowerCase()))
           .toList();
     }
-    founddouser.value = results;
+    founduser.value = results;
   }
 }

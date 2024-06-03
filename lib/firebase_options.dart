@@ -50,19 +50,20 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA_LYolLJWYVHg5T-g47aumNM2SFH89L3Q',
-    appId: '1:257205735066:android:957c81856d8b019dbb5923',
-    messagingSenderId: '257205735066',
-    projectId: 'loyverspos-8d112',
-    storageBucket: 'loyverspos-8d112.appspot.com',
+    apiKey: 'AIzaSyAjI3_6l0vHzExUo3QqFFuyEMG8bTOVrCs',
+    appId: '1:732990130087:android:ac9fbde9e32cddb2095882',
+    messagingSenderId: '732990130087',
+    projectId: 'bill-386d6',
+    storageBucket: 'bill-386d6.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA4Tmxrko5JKhM6xRC2GDiDq_fMkhLX3ZM',
-    appId: '1:257205735066:ios:e65dc2e2eebac3a6bb5923',
-    messagingSenderId: '257205735066',
-    projectId: 'loyverspos-8d112',
-    storageBucket: 'loyverspos-8d112.appspot.com',
+    apiKey: 'AIzaSyBaAf3tMT_uvqvOQQCYWoWbCl3Y6WyuxkA',
+    appId: '1:732990130087:ios:a3455194bdce5635095882',
+    messagingSenderId: '732990130087',
+    projectId: 'bill-386d6',
+    storageBucket: 'bill-386d6.appspot.com',
     iosBundleId: 'com.example.loyverspos',
   );
+
 }
