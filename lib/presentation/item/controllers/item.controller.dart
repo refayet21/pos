@@ -31,7 +31,7 @@ class ItemController extends GetxController {
     fetchAllItems();
   }
 
-  void deleteItem(int id) async {
+  void deleteItem(String id) async {
     await databaseHelper.deleteItem(id);
     fetchAllItems();
   }
