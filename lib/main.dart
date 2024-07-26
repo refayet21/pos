@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,6 +22,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  FirebaseFirestore.instance.settings =
+      const Settings(persistenceEnabled: true);
+
   runApp(Main(initialRoute));
 }
 
@@ -42,6 +46,10 @@ class Main extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: initialRoute,
         getPages: Nav.routes,
+        // theme: ThemeData.light(
+        //   useMaterial3: true,
+        //   // color: Colors.green,
+        // ),
       ),
     );
   }

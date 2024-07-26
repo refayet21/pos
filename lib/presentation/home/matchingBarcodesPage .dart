@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loyverspos/infrastructure/navigation/routes.dart';
 import 'package:loyverspos/model/item_model.dart';
 
@@ -58,11 +59,13 @@ class MatchingBarcodesPage extends StatelessWidget {
           return ListTile(
             title: Text(item.name),
             subtitle: Text(
-              'Barcode: ${item.barcode}, Price: \$${item.price.toStringAsFixed(2)}',
+              'Price: \₹${item.price.toStringAsFixed(2)}',
             ),
             trailing: IconButton(
               icon: Icon(
-                isInCart ? Icons.shopping_cart : Icons.add_shopping_cart,
+                isInCart ? Icons.shopping_bag : Icons.shopping_bag,
+                color: Colors.green,
+                size: 40.sp,
               ),
               onPressed: () {
                 if (!isInCart) {
