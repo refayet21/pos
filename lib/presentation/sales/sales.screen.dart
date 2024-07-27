@@ -44,7 +44,7 @@ class _SalesScreenState extends State<SalesScreen> {
                         Text(
                             'Price: \₹ ${item.price.toStringAsFixed(2)} × ${item.quantity}'),
                         Text(
-                            'Total: \₹ ${(item.price * item.quantity).toStringAsFixed(2)}')
+                            'Total: \₹ ${(item.price * item.quantity!).toStringAsFixed(2)}')
                       ],
                     ),
                     trailing: Row(
@@ -121,7 +121,7 @@ class _SalesScreenState extends State<SalesScreen> {
         'Product: ${item.name}-${item.barcode}',
         'Price: \₹${item.price}',
         'Quantity: ${item.quantity}',
-        'Total: \₹${(item.price * item.quantity).toStringAsFixed(2)}',
+        'Total: \₹${(item.price * item.quantity!).toStringAsFixed(2)}',
         '-------------'
       ];
       purchaseInfoList.add(itemInfo);
@@ -132,7 +132,7 @@ class _SalesScreenState extends State<SalesScreen> {
         '${item.name}-${item.barcode}',
         '${item.price}',
         '${item.quantity}',
-        '${(item.price * item.quantity).toStringAsFixed(2)}',
+        '${(item.price * item.quantity!).toStringAsFixed(2)}',
       ];
       purchaseInfofinalList.add(itemInfo);
     }

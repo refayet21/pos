@@ -122,7 +122,7 @@ class HomeController extends GetxController {
   }
 
   double get totalPrice => cartItems.fold(
-      0, (previousValue, item) => previousValue + item.price * item.quantity);
+      0, (previousValue, item) => previousValue + item.price * item.quantity!);
 
   bool isProductInCart(ItemModel product) {
     return cartItems.any((item) => item.id == product.id);
@@ -175,12 +175,17 @@ class HomeController extends GetxController {
   //       .refresh(); // This will trigger UI updates for all observers of cartItems
   // }
 
-  void increaseQuantity() {
-    newqty++;
+  void increaseQuantity(ItemModel itemModel) {
+    itemModel.newQuantity.value++;
   }
 
-  void decreaseQuantity() {
-    newqty--;
+  void decreaseQuantity(ItemModel itemModel) {
+    if (itemModel.newQuantity.value > 1) {
+      itemModel.newQuantity.value--;
+    } else {
+      Get.snackbar('Warning', 'Quantity cannot be less than 1',
+          snackPosition: SnackPosition.BOTTOM);
+    }
   }
 
   void clearCart() {

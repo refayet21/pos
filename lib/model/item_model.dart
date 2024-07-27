@@ -32,20 +32,25 @@
 //   }
 // }
 
+import 'package:get/get.dart';
+import 'package:get/get.dart';
+
 class ItemModel {
   String? id; // Firestore document ID
   String name;
   String barcode;
   double price;
-  int quantity;
+  int? quantity;
+  RxInt newQuantity; // Make newQuantity an observable field
 
   ItemModel({
     this.id,
     required this.name,
     required this.barcode,
     required this.price,
-    this.quantity = 1,
-  });
+    this.quantity,
+    int newQuantity = 1,
+  }) : newQuantity = newQuantity.obs;
 
   Map<String, dynamic> toMap() {
     return {
@@ -53,6 +58,7 @@ class ItemModel {
       'barcode': barcode,
       'price': price,
       'quantity': quantity,
+      'newQuantity': newQuantity.value,
     };
   }
 
@@ -62,7 +68,8 @@ class ItemModel {
       name: map['name'],
       barcode: map['barcode'],
       price: map['price'],
-      quantity: map['quantity'] ?? 1,
+      quantity: map['quantity'],
+      newQuantity: map['newQuantity'] ?? 1,
     );
   }
 }

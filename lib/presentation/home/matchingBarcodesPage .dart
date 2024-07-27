@@ -66,7 +66,7 @@ class MatchingBarcodesPage extends StatelessWidget {
                 ),
                 Obx(
                   () => Text(
-                      'Total: \₹ ${(item.price * cartController.newqty.toInt()).toStringAsFixed(2)}'),
+                      'Total: \₹ ${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}'),
                 )
               ],
             ),
@@ -80,7 +80,7 @@ class MatchingBarcodesPage extends StatelessWidget {
                   ),
                   onPressed: () {
                     // setState(() {
-                    cartController.decreaseQuantity();
+                    cartController.decreaseQuantity(item);
                     // _quantityController.text =
                     //     item.quantity.toString();
                     // });
@@ -101,8 +101,13 @@ class MatchingBarcodesPage extends StatelessWidget {
                   //     }
                   //   },
                   // ),
-
-                  child: Obx(() => Text('${cartController.newqty}')),
+                  child: Obx(
+                    () => SizedBox(
+                      width: 40,
+                      child: Center(child: Text('${item.newQuantity.value}')),
+                    ),
+                  ),
+                  // child: Obx(() => Text('${item.newQuantity}')),
                 ),
                 IconButton(
                   icon: Icon(
@@ -111,7 +116,7 @@ class MatchingBarcodesPage extends StatelessWidget {
                   ),
                   onPressed: () {
                     // setState(() {
-                    cartController.increaseQuantity();
+                    cartController.increaseQuantity(item);
                     // _quantityController.text =
                     //     item.quantity.toString();
                     // });
