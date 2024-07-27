@@ -213,12 +213,32 @@ class ItemScreen extends GetView<ItemController> {
                     fontSize: 18.sp,
                   ),
                 ),
-                subtitle: Text(
-                  'Barcode: ${item.barcode} | Price: ${item.price}',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: Colors.grey[600],
-                  ),
+                subtitle: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Barcode: ${item.barcode}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    Text(
+                      'Price: ${item.price}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                    Text(
+                      'Quantity: ${item.quantity}',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ],
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -258,6 +278,8 @@ class ItemScreen extends GetView<ItemController> {
     final barcodeController = TextEditingController(text: item?.barcode ?? '');
     final priceController =
         TextEditingController(text: item?.price.toString() ?? '');
+    final quantityController =
+        TextEditingController(text: item?.quantity.toString() ?? '');
 
     Get.defaultDialog(
       title: isNewItem ? 'Add Item' : 'Update Item',
@@ -276,6 +298,11 @@ class ItemScreen extends GetView<ItemController> {
             decoration: InputDecoration(labelText: 'Price'),
             keyboardType: TextInputType.number,
           ),
+          TextField(
+            controller: quantityController,
+            decoration: InputDecoration(labelText: 'Quantity'),
+            keyboardType: TextInputType.number,
+          ),
         ],
       ),
       textConfirm: isNewItem ? 'Save' : 'Update',
@@ -283,6 +310,7 @@ class ItemScreen extends GetView<ItemController> {
         final name = nameController.text;
         final barcode = barcodeController.text;
         final price = double.tryParse(priceController.text) ?? 0.0;
+        final quantity = int.tryParse(quantityController.text) ?? 0;
 
         if (name.isNotEmpty && barcode.isNotEmpty && price > 0) {
           final newItem = ItemModel(
@@ -290,6 +318,7 @@ class ItemScreen extends GetView<ItemController> {
             name: name,
             barcode: barcode,
             price: price,
+            quantity: quantity,
           );
 
           if (isNewItem) {
