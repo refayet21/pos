@@ -103,7 +103,8 @@ class HomeController extends GetxController {
   RxList<ItemModel> allItems = RxList<ItemModel>([]);
   var cartItems = <ItemModel>[].obs;
   final DatabaseHelper databaseHelper = DatabaseHelper();
-  final count = 0.obs;
+  // final count = 0.obs;
+  RxInt newqty = 1.obs;
 
   @override
   void onInit() {
@@ -137,41 +138,49 @@ class HomeController extends GetxController {
     }
   }
 
-  void increaseQuantity(ItemModel product) {
-    final index = cartItems.indexWhere((item) => item.id == product.id);
-    if (index != -1) {
-      cartItems[index].quantity++;
-      updatePrice();
-    }
+  // void increaseQuantity(ItemModel product) {
+  //   final index = cartItems.indexWhere((item) => item.id == product.id);
+  //   if (index != -1) {
+  //     cartItems[index].quantity++;
+  //     updatePrice();
+  //   }
+  // }
+
+  // void decreaseQuantity(ItemModel product) {
+  //   final index = cartItems.indexWhere((item) => item.id == product.id);
+  //   if (index != -1) {
+  //     if (cartItems[index].quantity > 1) {
+  //       cartItems[index].quantity--;
+  //     } else {
+  //       cartItems.removeAt(index);
+  //     }
+  //     updatePrice();
+  //   }
+  // }
+
+  // void updateQuantity(ItemModel product, int newQuantity) {
+  //   final index = cartItems.indexWhere((item) => item.id == product.id);
+  //   if (index != -1) {
+  //     if (newQuantity > 0) {
+  //       cartItems[index].quantity = newQuantity;
+  //     } else {
+  //       cartItems.removeAt(index);
+  //     }
+  //     updatePrice();
+  //   }
+  // }
+
+  // void updatePrice() {
+  //   cartItems
+  //       .refresh(); // This will trigger UI updates for all observers of cartItems
+  // }
+
+  void increaseQuantity() {
+    newqty++;
   }
 
-  void decreaseQuantity(ItemModel product) {
-    final index = cartItems.indexWhere((item) => item.id == product.id);
-    if (index != -1) {
-      if (cartItems[index].quantity > 1) {
-        cartItems[index].quantity--;
-      } else {
-        cartItems.removeAt(index);
-      }
-      updatePrice();
-    }
-  }
-
-  void updateQuantity(ItemModel product, int newQuantity) {
-    final index = cartItems.indexWhere((item) => item.id == product.id);
-    if (index != -1) {
-      if (newQuantity > 0) {
-        cartItems[index].quantity = newQuantity;
-      } else {
-        cartItems.removeAt(index);
-      }
-      updatePrice();
-    }
-  }
-
-  void updatePrice() {
-    cartItems
-        .refresh(); // This will trigger UI updates for all observers of cartItems
+  void decreaseQuantity() {
+    newqty--;
   }
 
   void clearCart() {

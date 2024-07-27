@@ -54,7 +54,7 @@ class _SalesScreenState extends State<SalesScreen> {
                           icon: Icon(Icons.remove),
                           onPressed: () {
                             setState(() {
-                              cartController.decreaseQuantity(item);
+                              // cartController.decreaseQuantity(item);
                               _quantityController.text =
                                   item.quantity.toString();
                             });
@@ -69,8 +69,8 @@ class _SalesScreenState extends State<SalesScreen> {
                             onChanged: (newValue) {
                               try {
                                 int newQuantity = int.parse(newValue);
-                                cartController.updateQuantity(
-                                    item, newQuantity);
+                                // cartController.updateQuantity(
+                                //     item, newQuantity);
                               } catch (e) {
                                 // handle error if newValue is not a valid integer
                               }
@@ -81,7 +81,7 @@ class _SalesScreenState extends State<SalesScreen> {
                           icon: Icon(Icons.add),
                           onPressed: () {
                             setState(() {
-                              cartController.increaseQuantity(item);
+                              // cartController.increaseQuantity(item);
                               _quantityController.text =
                                   item.quantity.toString();
                             });
