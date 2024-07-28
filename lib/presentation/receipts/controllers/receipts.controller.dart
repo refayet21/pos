@@ -46,7 +46,11 @@ class ReceiptsController extends GetxController {
           query.docs.map((item) => ReceiptsModel.fromMap(item)).toList());
   Future<void> getUserDo() async {
     final QuerySnapshot<Map<String, dynamic>> questionsQuery =
-        await FirebaseFirestore.instance.collection("receipts").get();
+        await FirebaseFirestore.instance
+            .collection("users")
+            .doc(box.read('employeeId'))
+            .collection("receipts")
+            .get();
     receipts.value = questionsQuery.docs.map((doc) => doc.data()).toList();
   }
 

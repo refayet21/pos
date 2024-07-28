@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:loyverspos/model/userModel.dart';
 import 'package:loyverspos/widgets/customFullScreenDialog.dart';
 import 'package:loyverspos/widgets/customSnackBar.dart';
@@ -24,6 +25,7 @@ class AdduserController extends GetxController {
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   late CollectionReference collectionReference;
+  final box = GetStorage();
 
   // RxList<userModel> users = RxList<userModel>([]);
   RxList<UserModel> users = RxList<UserModel>([]);
@@ -68,7 +70,7 @@ class AdduserController extends GetxController {
         await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
-        await collectionReference.add({
+        DocumentReference docRef =  await collectionReference.add({
           'name': name,
           'address': address,
           'mobile': mobile,
@@ -76,6 +78,8 @@ class AdduserController extends GetxController {
           'password': password,
           'receiptSerial': receiptSerial,
         });
+          await box.write('employeeId', docRef.id);
+        print("Added user docId is ${docRef.id}");
         CustomFullScreenDialog.cancelDialog();
         clearEditingControllers();
         Get.back();
