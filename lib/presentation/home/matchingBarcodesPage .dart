@@ -137,7 +137,7 @@ class MatchingBarcodesPage extends StatelessWidget {
                             isInCart
                                 ? Icons.shopping_bag
                                 : Icons.shopping_bag_outlined,
-                            color: Colors.green,
+                            color: Colors.blue,
                             size: 40.sp,
                           ),
                           // onPressed: () {

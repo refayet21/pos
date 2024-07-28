@@ -117,7 +117,7 @@ class _SalesScreenState extends State<SalesScreen> {
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-              flex: 3,
+              flex: 5,
               child: Padding(
                 padding: EdgeInsets.all(10.h),
                 child: Center(
@@ -139,22 +139,22 @@ class _SalesScreenState extends State<SalesScreen> {
                   ),
                 ),
               )),
-          Expanded(
-              flex: 2,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Cash Received',
-                    style:
-                        TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
-                  ),
-                  TextField(
-                    controller: cashReceiveController,
-                  )
-                ],
-              )),
+          // Expanded(
+          //     flex: 2,
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.start,
+          //       crossAxisAlignment: CrossAxisAlignment.start,
+          //       children: [
+          //         Text(
+          //           'Cash Received',
+          //           style:
+          //               TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+          //         ),
+          //         TextField(
+          //           controller: cashReceiveController,
+          //         )
+          //       ],
+          //     )),
           Expanded(
               flex: 1,
               child: Padding(
