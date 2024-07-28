@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:loyverspos/model/item_model.dart';
@@ -18,95 +19,186 @@ class SalesScreen extends StatefulWidget {
 class _SalesScreenState extends State<SalesScreen> {
   final HomeController cartController = Get.find<HomeController>();
   final SalesController controller = Get.put(SalesController());
+  TextEditingController cashReceiveController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
-      ),
+          // title: Text('Cart'),
+          ),
+      // body: Column(
+      //   children: [
+      //     Expanded(
+      //       child: Obx(
+      //         () => ListView.builder(
+      //           itemCount: cartController.cartItems.length,
+      //           itemBuilder: (context, index) {
+      //             final item = cartController.cartItems[index];
+      //             // TextEditingController _quantityController =
+      //             //     TextEditingController(text: item.quantity.toString());
+
+      //             return ListTile(
+      //               title: Text('${item.name}-${item.barcode}'),
+      //               subtitle: Column(
+      //                 crossAxisAlignment: CrossAxisAlignment.start,
+      //                 children: [
+      //                   Text(
+      //                       'Price: \₹ ${item.price.toStringAsFixed(2)} × ${item.newQuantity}'),
+      //                   Text(
+      //                       'Total: \₹ ${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}')
+      //                 ],
+      //               ),
+      //               // trailing: Row(
+      //               //   mainAxisSize: MainAxisSize.min,
+      //               //   children: [
+      //               //     IconButton(
+      //               //       icon: Icon(Icons.remove),
+      //               //       onPressed: () {
+      //               //         setState(() {
+      //               //           // cartController.decreaseQuantity(item);
+      //               //           _quantityController.text =
+      //               //               item.quantity.toString();
+      //               //         });
+      //               //       },
+      //               //     ),
+      //               //     SizedBox(
+      //               //       width: 50,
+      //               //       child: TextFormField(
+      //               //         controller: _quantityController,
+      //               //         keyboardType: TextInputType.number,
+      //               //         textAlign: TextAlign.center,
+      //               //         onChanged: (newValue) {
+      //               //           try {
+      //               //             int newQuantity = int.parse(newValue);
+      //               //             // cartController.updateQuantity(
+      //               //             //     item, newQuantity);
+      //               //           } catch (e) {
+      //               //             // handle error if newValue is not a valid integer
+      //               //           }
+      //               //         },
+      //               //       ),
+      //               //     ),
+      //               //     IconButton(
+      //               //       icon: Icon(Icons.add),
+      //               //       onPressed: () {
+      //               //         setState(() {
+      //               //           // cartController.increaseQuantity(item);
+      //               //           _quantityController.text =
+      //               //               item.quantity.toString();
+      //               //         });
+      //               //       },
+      //               //     ),
+      //               //   ],
+      //               // ),
+      //             );
+      //           },
+      //         ),
+      //       ),
+      //     ),
+      //     Obx(() => Padding(
+      //           padding: const EdgeInsets.all(8.0),
+      //           child: Text(
+      //             'Total Price: \₹ ${cartController.totalPrice.toStringAsFixed(2)}',
+      //             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      //           ),
+      //         )),
+      //     ElevatedButton(
+      //       onPressed: () async {
+      //         await _showPreviewDialog(context);
+      //       },
+      //       child: Text('Preview'),
+      //     ),
+      //   ],
+      // ),
+
       body: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
-            child: Obx(
-              () => ListView.builder(
-                itemCount: cartController.cartItems.length,
-                itemBuilder: (context, index) {
-                  final item = cartController.cartItems[index];
-                  // TextEditingController _quantityController =
-                  //     TextEditingController(text: item.quantity.toString());
-
-                  return ListTile(
-                    title: Text('${item.name}-${item.barcode}'),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              flex: 3,
+              child: Padding(
+                padding: EdgeInsets.all(10.h),
+                child: Center(
+                  child: Container(
+                    child: Column(
                       children: [
                         Text(
-                            'Price: \₹ ${item.price.toStringAsFixed(2)} × ${item.newQuantity}'),
+                          '\₹ ${cartController.totalPrice.toStringAsFixed(2)}',
+                          style: TextStyle(
+                              fontSize: 40.sp, fontWeight: FontWeight.bold),
+                        ),
                         Text(
-                            'Total: \₹ ${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}')
+                          'Total amount due ',
+                          style: TextStyle(
+                              fontSize: 11.sp, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
-                    // trailing: Row(
-                    //   mainAxisSize: MainAxisSize.min,
-                    //   children: [
-                    //     IconButton(
-                    //       icon: Icon(Icons.remove),
-                    //       onPressed: () {
-                    //         setState(() {
-                    //           // cartController.decreaseQuantity(item);
-                    //           _quantityController.text =
-                    //               item.quantity.toString();
-                    //         });
-                    //       },
-                    //     ),
-                    //     SizedBox(
-                    //       width: 50,
-                    //       child: TextFormField(
-                    //         controller: _quantityController,
-                    //         keyboardType: TextInputType.number,
-                    //         textAlign: TextAlign.center,
-                    //         onChanged: (newValue) {
-                    //           try {
-                    //             int newQuantity = int.parse(newValue);
-                    //             // cartController.updateQuantity(
-                    //             //     item, newQuantity);
-                    //           } catch (e) {
-                    //             // handle error if newValue is not a valid integer
-                    //           }
-                    //         },
-                    //       ),
-                    //     ),
-                    //     IconButton(
-                    //       icon: Icon(Icons.add),
-                    //       onPressed: () {
-                    //         setState(() {
-                    //           // cartController.increaseQuantity(item);
-                    //           _quantityController.text =
-                    //               item.quantity.toString();
-                    //         });
-                    //       },
-                    //     ),
-                    //   ],
-                    // ),
-                  );
-                },
-              ),
-            ),
-          ),
-          Obx(() => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Total Price: \₹ ${cartController.totalPrice.toStringAsFixed(2)}',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                 ),
               )),
-          ElevatedButton(
-            onPressed: () async {
-              await _showPreviewDialog(context);
-            },
-            child: Text('Preview'),
-          ),
+          Expanded(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Cash Received',
+                    style:
+                        TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+                  ),
+                  TextField(
+                    controller: cashReceiveController,
+                  )
+                ],
+              )),
+          Expanded(
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.all(10.w),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.money_sharp),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Text(
+                        'Cash',
+                        style: TextStyle(
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+          Expanded(
+              flex: 1,
+              child: Padding(
+                padding: EdgeInsets.all(10.w),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.credit_card),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Text(
+                        'Card',
+                        style: TextStyle(
+                            fontSize: 18.sp, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
         ],
       ),
     );
