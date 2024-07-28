@@ -104,8 +104,8 @@ class HomeController extends GetxController {
   var cartItems = <ItemModel>[].obs;
   final DatabaseHelper databaseHelper = DatabaseHelper();
   // final count = 0.obs;
-  RxInt newqty = 1.obs;
-
+  // RxInt newqty = 1.obs;
+  // final logger = Logger();
   @override
   void onInit() {
     super.onInit();
@@ -130,14 +130,27 @@ class HomeController extends GetxController {
     return cartItems.any((item) => item.id == product.id);
   }
 
+  // void addToCart(ItemModel product, {int quantity = 1}) {
+  //   if (!isProductInCart(product)) {
+  //     product.quantity = quantity;
+  //     cartItems.add(product);
+  //   } else {
+  //     print(
+  //         'Product is already in the cart'); // Consider using a logging package
+  //   }
+  // }
+
   void addToCart(ItemModel product, {int quantity = 1}) {
     if (!isProductInCart(product)) {
       product.quantity = quantity;
       cartItems.add(product);
     } else {
-      print(
-          'Product is already in the cart'); // Consider using a logging package
+      print('Product is already in the cart');
     }
+  }
+
+  void removeFromCart(ItemModel product) {
+    cartItems.removeWhere((item) => item.id == product.id);
   }
 
   // void increaseQuantity(ItemModel product) {

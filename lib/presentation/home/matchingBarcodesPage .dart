@@ -55,94 +55,107 @@ class MatchingBarcodesPage extends StatelessWidget {
         itemCount: matchingItems.length,
         itemBuilder: (context, index) {
           final item = matchingItems[index];
-          bool isInCart = cartController.isProductInCart(item);
-          return ListTile(
-            title: Text(item.name),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Price: \₹${item.price.toStringAsFixed(2)}',
-                ),
-                Obx(
-                  () => Text(
-                      'Total: \₹ ${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}'),
-                )
-              ],
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.remove,
-                    color: Colors.black,
+
+          return Obx(() {
+            bool isInCart = cartController.isProductInCart(item);
+            return ListTile(
+              title: Text(item.name),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Price: \₹${item.price.toStringAsFixed(2)}',
                   ),
-                  onPressed: () {
-                    // setState(() {
-                    cartController.decreaseQuantity(item);
-                    // _quantityController.text =
-                    //     item.quantity.toString();
-                    // });
-                  },
-                ),
-                SizedBox(
-                  width: 40.w,
-                  // child: TextFormField(
-                  //   // controller: _quantityController,
-                  //   keyboardType: TextInputType.number,
-                  //   textAlign: TextAlign.center,
-                  //   onChanged: (newValue) {
-                  //     try {
-                  //       int newQuantity = int.parse(newValue);
-                  //       cartController.updateQuantity(item, newQuantity);
-                  //     } catch (e) {
-                  //       // handle error if newValue is not a valid integer
-                  //     }
-                  //   },
-                  // ),
-                  child: Obx(
-                    () => SizedBox(
-                      width: 40,
-                      child: Center(child: Text('${item.newQuantity.value}')),
+                  Obx(
+                    () => Text(
+                        'Total: \₹ ${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}'),
+                  )
+                ],
+              ),
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.remove,
+                      color: Colors.black,
                     ),
+                    onPressed: () {
+                      // setState(() {
+                      cartController.decreaseQuantity(item);
+                      // _quantityController.text =
+                      //     item.quantity.toString();
+                      // });
+                    },
                   ),
-                  // child: Obx(() => Text('${item.newQuantity}')),
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.add,
-                    color: Colors.black,
+                  SizedBox(
+                    width: 40.w,
+                    // child: TextFormField(
+                    //   // controller: _quantityController,
+                    //   keyboardType: TextInputType.number,
+                    //   textAlign: TextAlign.center,
+                    //   onChanged: (newValue) {
+                    //     try {
+                    //       int newQuantity = int.parse(newValue);
+                    //       cartController.updateQuantity(item, newQuantity);
+                    //     } catch (e) {
+                    //       // handle error if newValue is not a valid integer
+                    //     }
+                    //   },
+                    // ),
+                    child: Obx(
+                      () => SizedBox(
+                        width: 40,
+                        child: Center(child: Text('${item.newQuantity.value}')),
+                      ),
+                    ),
+                    // child: Obx(() => Text('${item.newQuantity}')),
                   ),
-                  onPressed: () {
-                    // setState(() {
-                    cartController.increaseQuantity(item);
-                    // _quantityController.text =
-                    //     item.quantity.toString();
-                    // });
-                  },
-                ),
-                SizedBox(
-                  width: 20.w,
-                ),
-                IconButton(
-                  icon: Icon(
-                    isInCart ? Icons.shopping_bag : Icons.shopping_bag,
-                    color: Colors.green,
-                    size: 40.sp,
+                  IconButton(
+                    icon: Icon(
+                      Icons.add,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      // setState(() {
+                      cartController.increaseQuantity(item);
+                      // _quantityController.text =
+                      //     item.quantity.toString();
+                      // });
+                    },
                   ),
-                  onPressed: () {
-                    if (!isInCart) {
-                      cartController.addToCart(item);
-                    } else {
-                      // Optionally, handle removing from the cart
-                      // cartController.removeFromCart(item);
-                    }
-                  },
-                ),
-              ],
-            ),
-          );
+                  SizedBox(
+                    width: 20.w,
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      isInCart
+                          ? Icons.shopping_bag
+                          : Icons.shopping_bag_outlined,
+                      color: Colors.green,
+                      size: 40.sp,
+                    ),
+                    // onPressed: () {
+                    //   if (!isInCart) {
+                    //     cartController.addToCart(item);
+                    //   } else {
+                    //     // Optionally, handle removing from the cart
+                    //     // cartController.removeFromCart(item);
+                    //   }
+                    // },
+
+                    onPressed: () {
+                      if (isInCart) {
+                        cartController.removeFromCart(item);
+                      } else {
+                        cartController.addToCart(item);
+                      }
+                    },
+                  ),
+                ],
+              ),
+            );
+          });
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
