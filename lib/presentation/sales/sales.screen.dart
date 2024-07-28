@@ -20,6 +20,7 @@ class _SalesScreenState extends State<SalesScreen> {
   final HomeController cartController = Get.find<HomeController>();
   final SalesController controller = Get.put(SalesController());
   TextEditingController cashReceiveController = TextEditingController();
+  int inv = 1000;
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +161,9 @@ class _SalesScreenState extends State<SalesScreen> {
               child: Padding(
                 padding: EdgeInsets.all(10.w),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _saveReceipt('Cash');
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -182,7 +185,9 @@ class _SalesScreenState extends State<SalesScreen> {
               child: Padding(
                 padding: EdgeInsets.all(10.w),
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _saveReceipt('Card');
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -204,20 +209,74 @@ class _SalesScreenState extends State<SalesScreen> {
     );
   }
 
-  Future<void> _showPreviewDialog(BuildContext context) async {
-    List<List<dynamic>> purchaseInfoList = [];
-    List<List<dynamic>> purchaseInfofinalList = [];
+  // Future<void> _showPreviewDialog(BuildContext context) async {
+  //   List<List<dynamic>> purchaseInfoList = [];
+  //   List<List<dynamic>> purchaseInfofinalList = [];
 
-    for (var item in cartController.cartItems) {
-      List<dynamic> itemInfo = [
-        'Product: ${item.name}-${item.barcode}',
-        'Price: \₹${item.price}',
-        'Quantity: ${item.newQuantity}',
-        'Total: \₹${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}',
-        '-------------'
-      ];
-      purchaseInfoList.add(itemInfo);
-    }
+  //   for (var item in cartController.cartItems) {
+  //     List<dynamic> itemInfo = [
+  //       'Product: ${item.name}-${item.barcode}',
+  //       'Price: \₹${item.price}',
+  //       'Quantity: ${item.newQuantity}',
+  //       'Total: \₹${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}',
+  //       '-------------'
+  //     ];
+  //     purchaseInfoList.add(itemInfo);
+  //   }
+
+  //   for (var item in cartController.cartItems) {
+  //     List<dynamic> itemInfo = [
+  //       '${item.name}-${item.barcode}',
+  //       '${item.price}',
+  //       '${item.newQuantity}',
+  //       '${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}',
+  //     ];
+  //     purchaseInfofinalList.add(itemInfo);
+  //   }
+
+  //   await showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Preview Info'),
+  //         content: SingleChildScrollView(
+  //           child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.start,
+  //               crossAxisAlignment: CrossAxisAlignment.start,
+  //               children: [
+  //                 ...purchaseInfoList.map((info) {
+  //                   String itemInfo = info.join('\n');
+  //                   return Text(itemInfo);
+  //                 }).toList(),
+  //                 Text(
+  //                   'Total Price: \₹ ${cartController.totalPrice.toStringAsFixed(2)}',
+  //                   style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+  //                 ),
+  //               ]),
+  //         ),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () async {
+  //               await _saveReceipt(context, purchaseInfofinalList);
+  //             },
+  //             child: Text('Confirm'),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: Text('Cancel'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  Future<void> _saveReceipt(
+      // BuildContext context, List<List<dynamic>> purchaseInfofinalList
+      String paymentMethod) async {
+    List<List<dynamic>> purchaseInfofinalList = [];
 
     for (var item in cartController.cartItems) {
       List<dynamic> itemInfo = [
@@ -228,81 +287,39 @@ class _SalesScreenState extends State<SalesScreen> {
       ];
       purchaseInfofinalList.add(itemInfo);
     }
-
-    await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Preview Info'),
-          content: SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ...purchaseInfoList.map((info) {
-                    String itemInfo = info.join('\n');
-                    return Text(itemInfo);
-                  }).toList(),
-                  Text(
-                    'Total Price: \₹ ${cartController.totalPrice.toStringAsFixed(2)}',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                ]),
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () async {
-                await _saveReceipt(context, purchaseInfofinalList);
-              },
-              child: Text('Confirm'),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Cancel'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _saveReceipt(
-      BuildContext context, List<List<dynamic>> purchaseInfofinalList) async {
-    final box = GetStorage();
-    String currentDates = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    // final box = GetStorage();
+    String currentDates = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
     // Retrieve the stored date and docounter value from local storage
-    String? storedDate = box.read('storedDate');
-    int docounter = box.read('docounter') ?? 0;
+    // String? storedDate = box.read('storedDate');
+    // int docounter = box.read('docounter') ?? 0;
 
-    // Check if the stored date matches the current date
-    if (storedDate != currentDates) {
-      // Reset the counter to 1
-      docounter = 0;
-      // Update the stored date to the current date
-      await box.write('storedDate', currentDates);
-    } else {
-      // Increment the counter if the stored date matches the current date
-      docounter++;
-    }
+    // // Check if the stored date matches the current date
+    // if (storedDate != currentDates) {
+    //   // Reset the counter to 1
+    //   docounter = 0;
+    //   // Update the stored date to the current date
+    //   await box.write('storedDate', currentDates);
+    // } else {
+    //   // Increment the counter if the stored date matches the current date
+    //   docounter++;
+    // }
 
     // Save the updated docounter value to local storage
-    await box.write('docounter', docounter);
+    // await box.write('docounter', docounter);
 
-    docounter++;
+    // docounter++;
 
-    final String currentDate = DateTime.now().day.toString().padLeft(2, '0');
-    final String currentMonth = DateTime.now().month.toString().padLeft(2, '0');
-    final String currentYear = DateTime.now().year.toString();
-
-    final String InvNo =
-        'Inv-$currentDate-$currentMonth-$currentYear-$docounter';
+    // final String currentDate = DateTime.now().day.toString().padLeft(2, '0');
+    // final String currentMonth = DateTime.now().month.toString().padLeft(2, '0');
+    // final String currentYear = DateTime.now().year.toString();
+    inv++;
+    final String InvNo = '1-$inv';
 
     controller.saveReceipts(ReceiptsModel(
       receiptNo: InvNo,
-      date: '$currentDate-$currentMonth-$currentYear',
+      paymentMethod: paymentMethod,
+      date: '$currentDates',
       data: purchaseInfofinalList,
       totalPrice: cartController.totalPrice.toStringAsFixed(2),
     ));

@@ -211,6 +211,7 @@ class ReceiptsScreen extends GetView<ReceiptsController> {
                       onPressed: () {
                         controller.generateInvoicePdf(
                             controller.receipts[index]['receiptNo'],
+                            controller.receipts[index]['paymentMethod'],
                             controller.receipts[index]['date'],
                             convertedList,
                             controller.receipts[index]['totalPrice']);

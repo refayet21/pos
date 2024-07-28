@@ -50,8 +50,8 @@ class ReceiptsController extends GetxController {
     receipts.value = questionsQuery.docs.map((doc) => doc.data()).toList();
   }
 
-  Future<void> generateInvoicePdf(String receiptNo, String date,
-      List<List<dynamic>> data, String totalPrice) async {
+  Future<void> generateInvoicePdf(String receiptNo, String paymentMethod,
+      String date, List<List<dynamic>> data, String totalPrice) async {
     final doc = pw.Document();
 
     try {
@@ -120,6 +120,13 @@ class ReceiptsController extends GetxController {
                   'Total Price: $totalPrice',
                   style: pw.TextStyle(
                     fontSize: 11.0,
+                  ),
+                ),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  'Payment Method: $paymentMethod',
+                  style: pw.TextStyle(
+                    fontSize: 9.0,
                   ),
                 ),
               ],

@@ -8,6 +8,8 @@ import 'package:loyverspos/widgets/customFullScreenDialog.dart';
 import 'package:loyverspos/widgets/customSnackBar.dart';
 
 class SalesController extends GetxController {
+
+  
   Future<bool> saveReceipts(ReceiptsModel receipts) async {
     try {
       await FirebaseFirestore.instance
