@@ -7,26 +7,27 @@ class UserModel {
   String? mobile;
   String? email;
   String? password;
+  int? receiptSerial;
 
-  UserModel({
-    this.docId,
-    this.name,
-    this.address,
-    this.mobile,
-    this.email,
-    this.password,
-  });
+  UserModel(
+      {this.docId,
+      this.name,
+      this.address,
+      this.mobile,
+      this.email,
+      this.password,
+      this.receiptSerial});
 
   UserModel.fromJson(DocumentSnapshot data) {
     docId = data.id;
-    name = data["name"] as String?;
-    address = data["address"] as String?;
-    mobile = data["mobile"] as String?;
-    email = data["email"] as String?;
-    password = data["password"] as String?;
+    name = data["name"];
+    address = data["address"];
+    mobile = data["mobile"];
+    email = data["email"];
+    password = data["password"];
+    receiptSerial = data["receiptSerial"];
   }
 
-  // Convert VendorModel object to JSON
   Map<String, dynamic> toJson() {
     return {
       'docId': docId,
@@ -35,6 +36,7 @@ class UserModel {
       'mobile': mobile,
       'email': email,
       'password': password,
+      'receiptSerial': receiptSerial,
     };
   }
 }

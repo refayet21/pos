@@ -273,11 +273,64 @@ class _SalesScreenState extends State<SalesScreen> {
   //   );
   // }
 
-  Future<void> _saveReceipt(
-      // BuildContext context, List<List<dynamic>> purchaseInfofinalList
-      String paymentMethod) async {
-    List<List<dynamic>> purchaseInfofinalList = [];
+  // Future<void> _saveReceipt(
+  //     // BuildContext context, List<List<dynamic>> purchaseInfofinalList
+  //     String paymentMethod) async {
+  //   List<List<dynamic>> purchaseInfofinalList = [];
 
+  //   for (var item in cartController.cartItems) {
+  //     List<dynamic> itemInfo = [
+  //       '${item.name}-${item.barcode}',
+  //       '${item.price}',
+  //       '${item.newQuantity}',
+  //       '${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}',
+  //     ];
+  //     purchaseInfofinalList.add(itemInfo);
+  //   }
+  //   // final box = GetStorage();
+  //   String currentDates = DateFormat('dd-MM-yyyy').format(DateTime.now());
+
+  //   // Retrieve the stored date and docounter value from local storage
+  //   // String? storedDate = box.read('storedDate');
+  //   // int docounter = box.read('docounter') ?? 0;
+
+  //   // // Check if the stored date matches the current date
+  //   // if (storedDate != currentDates) {
+  //   //   // Reset the counter to 1
+  //   //   docounter = 0;
+  //   //   // Update the stored date to the current date
+  //   //   await box.write('storedDate', currentDates);
+  //   // } else {
+  //   //   // Increment the counter if the stored date matches the current date
+  //   //   docounter++;
+  //   // }
+
+  //   // Save the updated docounter value to local storage
+  //   // await box.write('docounter', docounter);
+
+  //   // docounter++;
+
+  //   // final String currentDate = DateTime.now().day.toString().padLeft(2, '0');
+  //   // final String currentMonth = DateTime.now().month.toString().padLeft(2, '0');
+  //   // final String currentYear = DateTime.now().year.toString();
+  //   inv++;
+  //   final String InvNo = '1-$inv';
+
+  //   controller.saveReceipts(ReceiptsModel(
+  //     receiptNo: InvNo,
+  //     paymentMethod: paymentMethod,
+  //     date: '$currentDates',
+  //     data: purchaseInfofinalList,
+  //     totalPrice: cartController.totalPrice.toStringAsFixed(2),
+  //   ));
+
+  //   Navigator.of(context).pop();
+  //   cartController.clearCart();
+  // }
+
+  Future<void> _saveReceipt(String paymentMethod) async {
+    // Prepare purchase information list
+    List<List<dynamic>> purchaseInfoFinalList = [];
     for (var item in cartController.cartItems) {
       List<dynamic> itemInfo = [
         '${item.name}-${item.barcode}',
@@ -285,46 +338,49 @@ class _SalesScreenState extends State<SalesScreen> {
         '${item.newQuantity}',
         '${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}',
       ];
-      purchaseInfofinalList.add(itemInfo);
+      purchaseInfoFinalList.add(itemInfo);
     }
-    // final box = GetStorage();
+
+    // Get the current date
     String currentDates = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
-    // Retrieve the stored date and docounter value from local storage
-    // String? storedDate = box.read('storedDate');
-    // int docounter = box.read('docounter') ?? 0;
+    // Find the last receiptSerial and increment it
+    int receiptSerial;
+    if (controller.users.isNotEmpty) {
+      receiptSerial = controller.users.last.receiptSerial ?? 0;
+      receiptSerial++;
+    } else {
+      receiptSerial = 1; // Starting serial number if list is empty
+    }
 
-    // // Check if the stored date matches the current date
-    // if (storedDate != currentDates) {
-    //   // Reset the counter to 1
-    //   docounter = 0;
-    //   // Update the stored date to the current date
-    //   await box.write('storedDate', currentDates);
-    // } else {
-    //   // Increment the counter if the stored date matches the current date
-    //   docounter++;
-    // }
+    // Create invoice number
+    final String invNo = '1-$receiptSerial';
 
-    // Save the updated docounter value to local storage
-    // await box.write('docounter', docounter);
-
-    // docounter++;
-
-    // final String currentDate = DateTime.now().day.toString().padLeft(2, '0');
-    // final String currentMonth = DateTime.now().month.toString().padLeft(2, '0');
-    // final String currentYear = DateTime.now().year.toString();
-    inv++;
-    final String InvNo = '1-$inv';
-
-    controller.saveReceipts(ReceiptsModel(
-      receiptNo: InvNo,
+    // Save receipt
+    bool success = await controller.saveReceipts(ReceiptsModel(
+      receiptNo: invNo,
       paymentMethod: paymentMethod,
-      date: '$currentDates',
-      data: purchaseInfofinalList,
+      date: currentDates,
+      data: purchaseInfoFinalList,
       totalPrice: cartController.totalPrice.toStringAsFixed(2),
     ));
 
-    Navigator.of(context).pop();
-    cartController.clearCart();
+    if (success) {
+      // Update the last user's receiptSerial in Firestore
+      if (controller.users.isNotEmpty) {
+        var lastUser = controller.users.last;
+        await controller.collectionReference
+            .doc(lastUser.docId)
+            .update({'receiptSerial': receiptSerial});
+      }
+
+      // Clear cart and close the dialog
+
+      Navigator.of(context).pop();
+      cartController.clearCart();
+    } else {
+      // Handle error
+      print('Error saving receipt');
+    }
   }
 }

@@ -10,13 +10,14 @@ class AdduserController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   var _auth = FirebaseAuth.instance;
   var currentUser = FirebaseAuth.instance.currentUser;
-  late String oldPassword;
+  // late String oldPassword;
 
   late TextEditingController nameController,
       addressController,
       mobileController,
       emailController,
-      passwordController;
+      passwordController,
+      receiptSerialController;
   RxList<UserModel> founduser = RxList<UserModel>([]);
 
   // Firestore operation
@@ -37,6 +38,8 @@ class AdduserController extends GetxController {
     mobileController = TextEditingController();
     emailController = TextEditingController();
     passwordController = TextEditingController();
+
+    receiptSerialController = TextEditingController();
     collectionReference = firebaseFirestore.collection("users");
     // users.bindStream(getAllusers());
     // founduser = users;
@@ -55,6 +58,7 @@ class AdduserController extends GetxController {
     String? mobile,
     String email,
     String password,
+    int? receiptSerial,
     String? docId,
     int? addEditFlag,
   ) async {
@@ -70,6 +74,7 @@ class AdduserController extends GetxController {
           'mobile': mobile,
           'email': email,
           'password': password,
+          'receiptSerial': receiptSerial,
         });
         CustomFullScreenDialog.cancelDialog();
         clearEditingControllers();
@@ -96,6 +101,7 @@ class AdduserController extends GetxController {
           'mobile': mobile,
           'email': email,
           'password': password,
+          'receiptSerial': receiptSerial,
         });
         CustomFullScreenDialog.cancelDialog();
         clearEditingControllers();
@@ -225,6 +231,7 @@ class AdduserController extends GetxController {
     mobileController.dispose();
     emailController.dispose();
     passwordController.dispose();
+    receiptSerialController.dispose();
   }
 
   void clearEditingControllers() {
@@ -233,6 +240,7 @@ class AdduserController extends GetxController {
     mobileController.clear();
     emailController.clear();
     passwordController.clear();
+    receiptSerialController.clear();
   }
 
   // Stream<List<userModel>> getAllusers() =>

@@ -4,12 +4,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:loyverspos/infrastructure/navigation/routes.dart';
 import 'package:loyverspos/model/receiptsModel.dart';
+import 'package:loyverspos/model/userModel.dart';
 import 'package:loyverspos/widgets/customFullScreenDialog.dart';
 import 'package:loyverspos/widgets/customSnackBar.dart';
 
 class SalesController extends GetxController {
+  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  late CollectionReference collectionReference;
+  RxList<UserModel> users = RxList<UserModel>([]);
 
-  
+  @override
+  void onInit() {
+    super.onInit();
+    collectionReference = firebaseFirestore.collection("users");
+    getAllusers().listen((user) {
+      users.assignAll(user);
+    });
+  }
+
+  Stream<List<UserModel>> getAllusers() => collectionReference.snapshots().map(
+      (query) => query.docs.map((item) => UserModel.fromJson(item)).toList());
+
   Future<bool> saveReceipts(ReceiptsModel receipts) async {
     try {
       await FirebaseFirestore.instance

@@ -194,7 +194,7 @@ class AdduserScreen extends GetView<AdduserController> {
                           ),
                           SizedBox(height: 3.h),
                           Text(
-                            'Password : ${controller.founduser[index].password!}',
+                            'Receipt Serial : ${controller.founduser[index].receiptSerial!}',
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
@@ -240,6 +240,10 @@ class AdduserScreen extends GetView<AdduserController> {
                             controller.founduser[index].email!;
                         controller.passwordController.text =
                             controller.founduser[index].password!;
+
+                        controller.receiptSerialController.text = controller
+                            .founduser[index].receiptSerial
+                            .toString();
 
                         _buildAddEdituserView(
                           text: 'UPDATE',
@@ -510,6 +514,26 @@ class AdduserScreen extends GetView<AdduserController> {
                     },
                   ),
                   SizedBox(height: 8),
+                  TextFormField(
+                    readOnly: addEditFlag == 2 ? true : false,
+                    keyboardType: TextInputType.number,
+                    // obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: 'ReceiptSerial',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    controller: controller.receiptSerialController,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your ReceiptSerial';
+                      }
+
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 8),
                   ConstrainedBox(
                     constraints: BoxConstraints.tightFor(
                       width: Get.context!.width,
@@ -528,6 +552,8 @@ class AdduserScreen extends GetView<AdduserController> {
                             controller.mobileController.text,
                             controller.emailController.text,
                             controller.passwordController.text,
+                            int.tryParse(
+                                controller.receiptSerialController.text),
                             docId!,
                             addEditFlag!,
                           );
@@ -571,7 +597,7 @@ class AdduserScreen extends GetView<AdduserController> {
       onCancel: () {},
       onConfirm: () {
         controller.deleteData(docId);
-        Get.back(); // Close the dialog after confirming deletion
+        Get.back();
       },
     );
   }
