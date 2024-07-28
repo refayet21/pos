@@ -33,8 +33,8 @@ class _SalesScreenState extends State<SalesScreen> {
                 itemCount: cartController.cartItems.length,
                 itemBuilder: (context, index) {
                   final item = cartController.cartItems[index];
-                  TextEditingController _quantityController =
-                      TextEditingController(text: item.quantity.toString());
+                  // TextEditingController _quantityController =
+                  //     TextEditingController(text: item.quantity.toString());
 
                   return ListTile(
                     title: Text('${item.name}-${item.barcode}'),
@@ -42,53 +42,53 @@ class _SalesScreenState extends State<SalesScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            'Price: \₹ ${item.price.toStringAsFixed(2)} × ${item.quantity}'),
+                            'Price: \₹ ${item.price.toStringAsFixed(2)} × ${item.newQuantity}'),
                         Text(
-                            'Total: \₹ ${(item.price * item.quantity!).toStringAsFixed(2)}')
+                            'Total: \₹ ${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}')
                       ],
                     ),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () {
-                            setState(() {
-                              // cartController.decreaseQuantity(item);
-                              _quantityController.text =
-                                  item.quantity.toString();
-                            });
-                          },
-                        ),
-                        SizedBox(
-                          width: 50,
-                          child: TextFormField(
-                            controller: _quantityController,
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            onChanged: (newValue) {
-                              try {
-                                int newQuantity = int.parse(newValue);
-                                // cartController.updateQuantity(
-                                //     item, newQuantity);
-                              } catch (e) {
-                                // handle error if newValue is not a valid integer
-                              }
-                            },
-                          ),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            setState(() {
-                              // cartController.increaseQuantity(item);
-                              _quantityController.text =
-                                  item.quantity.toString();
-                            });
-                          },
-                        ),
-                      ],
-                    ),
+                    // trailing: Row(
+                    //   mainAxisSize: MainAxisSize.min,
+                    //   children: [
+                    //     IconButton(
+                    //       icon: Icon(Icons.remove),
+                    //       onPressed: () {
+                    //         setState(() {
+                    //           // cartController.decreaseQuantity(item);
+                    //           _quantityController.text =
+                    //               item.quantity.toString();
+                    //         });
+                    //       },
+                    //     ),
+                    //     SizedBox(
+                    //       width: 50,
+                    //       child: TextFormField(
+                    //         controller: _quantityController,
+                    //         keyboardType: TextInputType.number,
+                    //         textAlign: TextAlign.center,
+                    //         onChanged: (newValue) {
+                    //           try {
+                    //             int newQuantity = int.parse(newValue);
+                    //             // cartController.updateQuantity(
+                    //             //     item, newQuantity);
+                    //           } catch (e) {
+                    //             // handle error if newValue is not a valid integer
+                    //           }
+                    //         },
+                    //       ),
+                    //     ),
+                    //     IconButton(
+                    //       icon: Icon(Icons.add),
+                    //       onPressed: () {
+                    //         setState(() {
+                    //           // cartController.increaseQuantity(item);
+                    //           _quantityController.text =
+                    //               item.quantity.toString();
+                    //         });
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
                   );
                 },
               ),
@@ -120,8 +120,8 @@ class _SalesScreenState extends State<SalesScreen> {
       List<dynamic> itemInfo = [
         'Product: ${item.name}-${item.barcode}',
         'Price: \₹${item.price}',
-        'Quantity: ${item.quantity}',
-        'Total: \₹${(item.price * item.quantity!).toStringAsFixed(2)}',
+        'Quantity: ${item.newQuantity}',
+        'Total: \₹${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}',
         '-------------'
       ];
       purchaseInfoList.add(itemInfo);
@@ -131,8 +131,8 @@ class _SalesScreenState extends State<SalesScreen> {
       List<dynamic> itemInfo = [
         '${item.name}-${item.barcode}',
         '${item.price}',
-        '${item.quantity}',
-        '${(item.price * item.quantity!).toStringAsFixed(2)}',
+        '${item.newQuantity}',
+        '${(item.price * item.newQuantity.toInt()).toStringAsFixed(2)}',
       ];
       purchaseInfofinalList.add(itemInfo);
     }

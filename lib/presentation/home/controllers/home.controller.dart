@@ -122,7 +122,9 @@ class HomeController extends GetxController {
   }
 
   double get totalPrice => cartItems.fold(
-      0, (previousValue, item) => previousValue + item.price * item.quantity!);
+      0,
+      (previousValue, item) =>
+          previousValue + item.price * item.newQuantity.toInt());
 
   bool isProductInCart(ItemModel product) {
     return cartItems.any((item) => item.id == product.id);
